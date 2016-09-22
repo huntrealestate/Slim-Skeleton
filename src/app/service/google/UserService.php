@@ -5,30 +5,22 @@ use SlimApi\OAuth\UserServiceInterface;
 use OAuth\Common\Service\ServiceInterface;
 
 class UserService implements UserServiceInterface {
-
+    
     public function __construct($userModel)
     {
         $this->userModel = $userModel;
     }
 
-    public function createUser(ServiceInterface $service)
+    public function createUser(ServiceInterface $googleService)
     {
-        // request the user information from github
+        // request the user information from google
         // could go further with this and check org/team membership
-        $user = json_decode($service->request('user'), true);
+        $user = json_decode($googleService->request('user'), true);
 
         // try to find user by the oauth server's user id, 
         // best way since oauth token might have been invalidated
-        $models = $this->userModel->byRemoteId($user['id'])->get(); 
-        $model  = $models->first();
-
-        if (!$model) {
-            // create and save a new user
-            $model = new $this->userModel([
-                'remote_id'   => $user['id']
-            ]);
-        }
-        $model->oauth_token = $service->getStorage()->retrieveAccessToken('GitHub')->getAccessToken();
+        $model  = $this->userModel->firstOrNew(['remote_id' => $user['id']]);
+        $model->oauth_token = $googleService->getStorage()->retrieveAccessToken('google')->getAccessToken();
         $model->token       = App\Utils\TokenGenerator::getToken();
         $model->save();
         return $model;

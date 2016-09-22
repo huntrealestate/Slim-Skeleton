@@ -1,9 +1,9 @@
 
 server {
     listen 80 default_server;
-    server_name Slim-Skeleton.huntrealestate.com ~^.+-Slim-Skeleton\.huntcorp\.co _;
-    access_log /var/log/nginx/access_Slim-Skeleton.log;
-    error_log /var/log/nginx/error_Slim-Skeleton.log;
+    server_name huntbid.huntrealestate.com ~^.+-huntbid\.huntcorp\.co _;
+    access_log /var/log/nginx/access_huntbid.log;
+    error_log /var/log/nginx/error_huntbid.log;
     client_max_body_size 100m;
 
     gzip on;
@@ -28,12 +28,12 @@ server {
 
     location ~* ^.+\.(jpg|jpeg|gif|png|ico|css|zip|tgz|gz|rar|bz2|pdf|txt|tar|wav|bmp|rtf|js|flv|swf|html|htm|eot|ttf|woff|otf)$
     {
-        root /home/ec2-user/Slim-Skeleton/public;
+        root /home/ec2-user/huntbid/public;
         expires 1h;
     }
 
     location / {
-        root   /home/ec2-user/Slim-Skeleton/public;
+        root   /home/ec2-user/huntbid/public;
         index  index.php index.html index.htm;
 
         try_files $uri $uri/ @rewrites;
@@ -46,7 +46,7 @@ server {
     location ~ \.php$ {
         fastcgi_pass   unix:/var/run/php-fpm/php-fpm.sock;
         fastcgi_index  index.php;
-        fastcgi_param  SCRIPT_FILENAME  /home/ec2-user/Slim-Skeleton/public$fastcgi_script_name;
+        fastcgi_param  SCRIPT_FILENAME  /home/ec2-user/huntbid/public$fastcgi_script_name;
         include        fastcgi_params;
     }
 

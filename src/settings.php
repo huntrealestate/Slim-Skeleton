@@ -14,6 +14,7 @@ return [
             'name' => 'slim-app',
             'path' => __DIR__ . '/../logs/app.log',
             'level' => \Monolog\Logger::DEBUG,
+        ],
         
         // OAuth Credentials
         'oAuthCreds' => [
@@ -25,14 +26,17 @@ return [
         ],
         
         'db' => [
-            'driver' => 'mysql',
-            'host' => 'localhost',
-            'database' => 'database',
-            'username' => 'user',
-            'password' => 'password',
-            'charset'   => 'utf8',
-            'collation' => 'utf8_unicode_ci',
-            'prefix'    => '',
+            'huntbiddb' => [
+                'driver' => 'mysql',
+                'host' => 'localhost',
+                'port' => '3306',
+                'database' => 'huntbid',
+                'username' => 'huntbid_rw',
+                'password' => '8jU&5eNGk4s8Z!xB',
+                'charset'   => 'utf8',
+                'collation' => 'utf8_unicode_ci',
+                'prefix'    => '',
+            ],
         ],
     ],
 ];

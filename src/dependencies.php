@@ -39,29 +39,28 @@ $container['google-client'] = function($container) {
 
 // slim-oauth
 $container[SlimApi\OAuth\OAuthFactory::class] = function($container) {
-    return new OAuthFactory($container->get('settings')['oAuthCreds']);
+    return new SlimApi\OAuth\OAuthFactory($container->get('settings')['oAuthCreds']);
 };
 
 $container[SlimApi\OAuth\UserServiceInterface::class] = function($container) {
     //user service should implement SlimApi\OAuth\UserServiceInterface
     //user model should have a token variable to hold the random token sent to the client
-    return new Google\Service\UserService($container->get('App\Model\User'));
+    $usermodel = $container->get('db')->table('google_tokens');
+    return new App\Service\Google\UserService(new App\Model\GoogleToken());
 };
 
 $container[SlimApi\OAuth\OAuthMiddleware::class] = function($container) {
-    return new OAuthMiddleware(
-        $container->get('SlimApi\OAuth\OAuthFactory'),
-        $container->get('SlimApi\OAuth\UserServiceInterface')
+    return new SlimApi\OAuth\OAuthMiddleware(
+        $container->get(SlimApi\OAuth\OAuthFactory::class),
+        $container->get(SlimApi\OAuth\UserServiceInterface::class)
     );
 };
 
 // Service factory for the ORM
 $container['db'] = function ($container) {
     $capsule = new \Illuminate\Database\Capsule\Manager;
-    $capsule->addConnection($container['settings']['db']);
-
+    $capsule->addConnection($container['settings']['db']['huntbiddb']);
     $capsule->setAsGlobal();
     $capsule->bootEloquent();
-
     return $capsule;
 };
