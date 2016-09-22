@@ -14,14 +14,25 @@ return [
             'name' => 'slim-app',
             'path' => __DIR__ . '/../logs/app.log',
             'level' => \Monolog\Logger::DEBUG,
-        ],
+        
+        // OAuth Credentials
         'oAuthCreds' => [
-            // OAuth Credentials for Google API
             'google' => [
                 'client_id' => 'your_client_id',
                 'client_secret' => 'your_client_secret',
                 'application_name' => 'Google PHP Slim-Skeleton Framework',
             ]
+        ],
+        
+        'db' => [
+            'driver' => 'mysql',
+            'host' => 'localhost',
+            'database' => 'database',
+            'username' => 'user',
+            'password' => 'password',
+            'charset'   => 'utf8',
+            'collation' => 'utf8_unicode_ci',
+            'prefix'    => '',
         ],
     ],
 ];
