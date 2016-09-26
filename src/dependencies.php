@@ -61,7 +61,7 @@ $container[SlimApi\OAuth\OAuthFactory::class] = function($container) {
 $container[SlimApi\OAuth\UserServiceInterface::class] = function($container) {
     //user service should implement SlimApi\OAuth\UserServiceInterface
     //user model should have a token variable to hold the random token sent to the client
-    $usermodel = $container->get('db')->table('google_tokens');
+    //$usermodel = App\Model\User; // $container->get('db')->table('google_tokens');
     return new App\Service\Google\UserService(new App\Model\GoogleToken());
 };
 
