@@ -21,10 +21,26 @@ $container['logger'] = function ($c) {
     return $logger;
 };
 
+// Service factory for the ORM
+$container['db'] = function ($container) {
+    $capsule = new \Illuminate\Database\Capsule\Manager;
+    $capsule->addConnection($container['settings']['db']['huntbiddb']);
+    $capsule->setAsGlobal();
+    $capsule->bootEloquent();
+    return $capsule;
+};
+
+//hybridauth
+$container[Hybrid_Auth::class] = function($container) {
+    Hybrid_Endpoint::process();
+    return new Hybrid_Auth($container->get('settings')['hybridauth']);
+};
+
 // google client
 /*
 possibly not necessary
 $container['google-client'] = function($container) {
+    $container->get('settings')['oAuthCreds'];
     $client = new Google_Client();
     $client->setApplicationName($googleSettings['application_name']);
     $client->setClientId($googleSettings['client_id']);
@@ -56,11 +72,3 @@ $container[SlimApi\OAuth\OAuthMiddleware::class] = function($container) {
     );
 };
 
-// Service factory for the ORM
-$container['db'] = function ($container) {
-    $capsule = new \Illuminate\Database\Capsule\Manager;
-    $capsule->addConnection($container['settings']['db']['huntbiddb']);
-    $capsule->setAsGlobal();
-    $capsule->bootEloquent();
-    return $capsule;
-};

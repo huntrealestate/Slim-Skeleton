@@ -15,7 +15,6 @@ return [
             'path' => __DIR__ . '/../logs/app.log',
             'level' => \Monolog\Logger::DEBUG,
         ],
-        
         // OAuth Credentials
         'oAuthCreds' => [
             'google' => [
@@ -24,7 +23,6 @@ return [
                 'application_name' => 'Google PHP Slim-Skeleton Framework',
             ]
         ],
-        
         'db' => [
             'huntbiddb' => [
                 'driver' => 'mysql',
@@ -37,6 +35,56 @@ return [
                 'collation' => 'utf8_unicode_ci',
                 'prefix'    => '',
             ],
+        ],
+        'hybridauth' => [
+			"base_url" => "http://dev-huntbid.huntcorp.co",
+			"providers" => [
+				// openid providers
+				"OpenID" => [
+					"enabled" => false
+				],
+				"Yahoo" => [
+					"enabled" => false,
+					"keys" => ["key" => "", "secret" => ""],
+				],
+				"AOL" => [
+					"enabled" => false
+				],
+				"Google" => [
+					"enabled" => false,
+					"keys" => ["id" => "", "secret" => ""],
+				],
+				"Facebook" => [
+					"enabled" => false,
+					"keys" => ["id" => "", "secret" => ""],
+					"trustForwarded" => false
+				],
+				"Twitter" => [
+					"enabled" => false,
+					"keys" => ["key" => "", "secret" => ""],
+					"includeEmail" => false
+				],
+				// windows live
+				"Live" => [
+					"enabled" => false,
+					"keys" => ["id" => "", "secret" => ""]
+				],
+				"LinkedIn" => [
+					"enabled" => false,
+					"keys" => ["key" => "", "secret" => ""]
+				],
+				"Foursquare" => [
+					"enabled" => false,
+					"keys" => ["id" => "", "secret" => ""]
+				],
+			],
+			// If you want to enable logging, set 'debug_mode' to true.
+			// You can also set it to
+			// - "error" To log only error messages. Useful in production
+			// - "info" To log info and error messages (ignore debug messages]
+			"debug_mode" => true,
+			// Path to file writable by the web server. Required if 'debug_mode' is not false
+			"debug_file" => __DIR__ . '/../logs/hybridauth.log',
         ],
     ],
 ];

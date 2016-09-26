@@ -1,7 +1,7 @@
 #!/bin/sh
 
-cd /etc/nginx/
-sudo ln -f -s /home/ec2-user/huntbid/etc/nginx/huntbid-conf.d .
+cd /etc/nginx/conf.d
+sudo ln -f -s /home/ec2-user/huntbid/etc/nginx/huntbid.conf .
 
 sudo chmod 755 /home/ec2-user
 
