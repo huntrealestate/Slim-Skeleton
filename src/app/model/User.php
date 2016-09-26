@@ -31,6 +31,9 @@ class User extends Model {
             case:'google': {
                 return $this->google_token()->where('access_token', '=', $token)->user();
             }
+            default:{
+                return $this->where('1', '=', '0');
+            }
         }
         return $this->hasOne('App\Model\GoogleToken');
     }
