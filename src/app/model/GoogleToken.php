@@ -12,4 +12,12 @@ class GoogleToken extends Model {
      * @var string
      */
     protected $table = 'google_tokens';
+    
+    /**
+     * Get the user that owns the google_token.
+     */
+    public function user()
+    {
+        return $this->belongsTo('App\Model\User');
+    }
 }
