@@ -47,10 +47,21 @@ class BaseTestCase extends \PHPUnit_Framework_TestCase
         if (isset($requestData)) {
             $request = $request->withParsedBody($requestData);
         }
-
+        
         // Set up a response object
         $response = new Response();
+        
+        $app = $this->getApp();
+        
+        // Process the application
+        $response = $app->process($request, $response);
 
+        // Return the response
+        return $response;
+    }
+    
+    protected function getApp()
+    {
         // Use the application settings
         $settings = require __DIR__ . '/../../src/settings.php';
 
@@ -64,14 +75,10 @@ class BaseTestCase extends \PHPUnit_Framework_TestCase
         if ($this->withMiddleware) {
             require __DIR__ . '/../../src/middleware.php';
         }
-
+        
         // Register routes
         require __DIR__ . '/../../src/routes.php';
-
-        // Process the application
-        $response = $app->process($request, $response);
-
-        // Return the response
-        return $response;
+        
+        return $app;
     }
 }
