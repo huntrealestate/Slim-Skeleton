@@ -51,7 +51,7 @@ return [
 					"enabled" => false
 				],
 				"Google" => [
-					"enabled" => false,
+					"enabled" => true,
 					"keys" => ["id" => "", "secret" => ""],
 				],
 				"Facebook" => [

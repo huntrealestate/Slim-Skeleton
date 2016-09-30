@@ -31,7 +31,7 @@ $container['db'] = function ($container) {
 };
 
 //hybridauth
-$container[Hybrid_Auth::class] = function($container) {
+$container['hybridauth'] = function($container) {
     Hybrid_Endpoint::process();
     return new Hybrid_Auth($container->get('settings')['hybridauth']);
 };

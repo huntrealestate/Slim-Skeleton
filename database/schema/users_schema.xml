@@ -10,10 +10,16 @@
         <sql><![CDATA[
 CREATE TABLE `users` (
     `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+	`identifier` varchar(50) NOT NULL,
     `name` VARCHAR(100) DEFAULT NULL,
     `create_timestamp` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     `update_timestamp` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (`id`)
+	`email` varchar(50) DEFAULT NULL,
+	`first_name` varchar(20) DEFAULT NULL,
+	`last_name` varchar(20) DEFAULT NULL,
+	`avatar_url` varchar(255),
+    PRIMARY KEY (`id`),
+	UNIQUE KEY `identifier` (`identifier`)
 ) ENGINE=InnoDB CHARACTER SET=utf8 ROW_FORMAT=DYNAMIC;
         ]]></sql>
         <rollback><![CDATA[
