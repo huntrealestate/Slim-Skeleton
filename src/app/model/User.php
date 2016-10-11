@@ -28,7 +28,7 @@ class User extends Model {
     public function whereToken($token, $type = 'google')
     {
         switch($type){
-            case:'google': {
+            case'google': {
                 return $this->google_token()->where('access_token', '=', $token)->user();
             }
             default:{

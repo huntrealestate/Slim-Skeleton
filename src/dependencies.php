@@ -30,6 +30,12 @@ $container['db'] = function ($container) {
     return $capsule;
 };
 
+$container['model'] = function ($container) {
+    return [
+        'users' => null //TODO implement the retrieval of the model
+    ];
+};
+
 //hybridauth
 $container['hybridauth'] = function($container) {
     Hybrid_Endpoint::process();
