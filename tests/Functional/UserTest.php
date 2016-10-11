@@ -16,5 +16,5 @@ class UserTest extends BaseTestCase
         $this->assertArrayHasKey('users',$model);
         $this->assertEmpty($model);
     }
-    // TODO: Last half of the 3rd comment in the Pull request review
-}
+    // TODO: Check the rest of the Google Authenticate tutorial and make sure what this returns incorporates all
+    // functions.
