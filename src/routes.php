@@ -38,17 +38,51 @@ $app->get( '/login/:idp', function ($request, $response, $args) {
     }
 );
 
+function getLeadsModel() {
+    $google_doc_id = '19Ya9gHRcS6dYFQX6aTJsbZmAfuNVpEB1lSG5a07_930';
+    $csv_url = "https://docs.google.com/spreadsheets/d/{$google_doc_id}/export?format=csv&id={$google_doc_id}";
+    $parser = new App\Utils\LeadCsvParser();
+    $csvDownloader = new App\Utils\LeadCsvDownloader( $parser, $csv_url );
+    return new App\Model\Leads($csvDownloader);
+}
+
 // TODO Change route name back to something sane once we have authentication in.
 $app->group('/abqrd8730', function() {
-    $this->get('/', function($request, $response, $args) {
+    $this->get('/all/', function($request, $response, $args) {
         $leads = array();
-        $google_doc_id = '19Ya9gHRcS6dYFQX6aTJsbZmAfuNVpEB1lSG5a07_930';
-        $csv_url = "https://docs.google.com/spreadsheets/d/{$google_doc_id}/export?format=csv&id={$google_doc_id}";
-        $parser = new App\Utils\LeadCsvParser();
-        $csvDownloader = new App\Utils\LeadCsvDownloader( $parser, $csv_url );
-        $leadModel = new App\Model\Leads($csvDownloader);
-        $leads = $leadModel->getLeads();
+        $leadsModel = getLeadsModel();
+        $leads = $leadsModel->getLeads();
         return $this->renderer->render($response, 'leads.phtml', ['data' => $leads ]);
+    });
+
+    $this->get('/', function($request, $response, $args) {
+        $leadsModel = getLeadsModel();
+        $endDate = new DateTime();
+        $endDate->setTime(0, 0, 0);
+        $startDate = clone($endDate);
+        $startDate->sub(new DateInterval('P7D'));
+        $leadsFetchParams = new App\Model\LeadsFetchParams( $startDate, $endDate, 'm/d/Y' );
+        $leads = $leadsModel->getLeads($leadsFetchParams);
+        return $this->renderer->render($response, 'leads.phtml', ['data' => $leads ]);
+    });
+
+    $this->get('/{year}/{month}/{day}/', function($request, $response, $args) {
+        $leadsModel = getLeadsModel();
+        $endDate = DateTime::CreateFromFormat('Y/m/d', $args['year'] . '/' . $args['month'] . '/' . $args['day']);
+        $startDate = clone($endDate);
+        $startDate->sub(new DateInterval('P7D'));
+        $leadsFetchParams = new App\Model\LeadsFetchParams( $startDate, $endDate, 'm/d/Y' );
+        $leads = $leadsModel->getLeads($leadsFetchParams);
+        return $this->renderer->render($response, 'leads.phtml', [ 'data' => $leads ]);
+    });
+
+    $this->get('/{start_year}/{start_month}/{start_day}/{end_year}/{end_month}/{end_day}/', function($request, $response, $args) {
+        $leadsModel = getLeadsModel();
+        $endDate = DateTime::CreateFromFormat('Y/m/d', $args['end_year'] . '/' . $args['end_month'] . '/' . $args['end_day']);
+        $startDate = DateTime::CreateFromFormat('Y/m/d', $args['start_year'] . '/' . $args['start_month'] . '/' . $args['start_day']);
+        $leadsFetchParams = new App\Model\LeadsFetchParams( $startDate, $endDate, 'm/d/Y' );
+        $leads = $leadsModel->getLeads($leadsFetchParams);
+        return $this->renderer->render($response, 'leads.phtml', [ 'data' => $leads ]);
     });
 });
 
