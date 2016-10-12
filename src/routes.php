@@ -1,4 +1,7 @@
 <?php
+require __DIR__ . '/app/util/util.php';
+require __DIR__ . '/app/model/Lead.php';
+require __DIR__ . '/app/data/data.php';
 // Routes
 
 $app->get( '/login/:idp', function ($request, $response, $args) {
@@ -36,6 +39,20 @@ $app->get( '/login/:idp', function ($request, $response, $args) {
         }
     }
 );
+
+// TODO Change route name back to something sane once we have authentication in.
+$app->group('/abqrd8730', function() {
+    $this->get('/', function($request, $response, $args) {
+        $leads = array();
+        $google_doc_id = '19Ya9gHRcS6dYFQX6aTJsbZmAfuNVpEB1lSG5a07_930';
+        $csv_url = "https://docs.google.com/spreadsheets/d/{$google_doc_id}/export?format=csv&id={$google_doc_id}";
+        $parser = new App\Util\LeadCsvParser();
+        $csvDownloader = new App\Util\LeadCsvDownloader( $parser, $csv_url );
+        $leadModel = new App\Model\LeadModel($csvDownloader);
+        $leads = $leadModel->getLeads();
+        return $this->renderer->render($response, 'leads.phtml', ['data' => $leads ]);
+    });
+});
 
 /*
 Example Routes
