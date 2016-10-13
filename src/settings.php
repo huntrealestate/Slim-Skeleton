@@ -19,14 +19,16 @@ return [
             'path' => __DIR__ . '/../logs/app.log',
             'level' => \Monolog\Logger::DEBUG,
         ],
+
         // OAuth Credentials
         'oAuthCreds' => [
             'google' => [
                 'client_id' => 'your_client_id',
                 'client_secret' => 'your_client_secret',
-                'application_name' => 'Google PHP Slim-Skeleton Framework',
+                'application_name' => 'Hunt BIDS',
             ]
         ],
+
         'db' => [
             'huntbiddb' => [
                 'driver' => 'mysql',
@@ -40,6 +42,7 @@ return [
                 'prefix'    => '',
             ],
         ],
+
         'hybridauth' => [
 			"base_url" => "http://dev-huntbid.huntcorp.co",
 			"providers" => [
