@@ -15,7 +15,7 @@ $container['logger'] = function ($c) {
     $logger = new Monolog\Logger($settings['name']);
     $logger->pushProcessor(new Monolog\Processor\UidProcessor());
     $logger->pushHandler(new Monolog\Handler\StreamHandler(
-        $settings['path'], 
+        $settings['path'],
         $settings['level']
     ));
     return $logger;
@@ -31,8 +31,10 @@ $container['db'] = function ($container) {
 };
 
 $container['model'] = function ($container) {
+    $db = $container->get('db');
+    return null; //FIXME this doesn't work
     return [
-        'users' => null //TODO implement the retrieval of the model
+        'users' => \App\Model\User::from('users'),
     ];
 };
 
@@ -40,6 +42,11 @@ $container['model'] = function ($container) {
 $container['hybridauth'] = function($container) {
     Hybrid_Endpoint::process();
     return new Hybrid_Auth($container->get('settings')['hybridauth']);
+};
+
+//HybridAuth socialauth implementation
+$container['socialauth'] = function($container) {
+    return new \App\SocialLogin( $container->get('model')['users'] );
 };
 
 // google client
@@ -77,4 +84,3 @@ $container[SlimApi\OAuth\OAuthMiddleware::class] = function($container) {
         $container->get(SlimApi\OAuth\UserServiceInterface::class)
     );
 };
-
