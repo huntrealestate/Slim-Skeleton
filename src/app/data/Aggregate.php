@@ -18,10 +18,19 @@ class Aggregate implements \JsonSerializable {
                          'Hotpads.com',
                          'Trulia.com',
                          'Zillow.com',
+                         'LeadRouter Total',
                          'DTA - huntrealestate.com',
                          'Voicepad',
                          'VoicepadUnique',
                          'Combined',
+    ];
+
+    private $leadRouterTotalSources = [ 'ERA.com (Zap)',
+                                        'Homes.com',
+                                        'Homefinder.com',
+                                        'Hotpads.com',
+                                        'Trulia.com',
+                                        'Zillow.com',
     ];
 
     private $sourcesMap = [ 'LR - HUNT Website' => 'Huntrealestate.com (IDX)',
@@ -99,13 +108,24 @@ class Aggregate implements \JsonSerializable {
             $region = $this->regionsMap[$lead->getOffice()];
             $this->totals[$source][$region]++;
             $this->totals[$source]['Total']++;
-            $this->totals['Combined'][$region]++;
+
+            if (in_array($source, $this->leadRouterTotalSources)) {
+                $this->totals['LeadRouter Total'][$region]++;
+                $this->totals['LeadRouter Total']['Total']++;
+            }
+
             if ($source == 'Voicepad') {
                 $emailPhone = $lead->getEmailPhone();
                 if (!in_array($emailPhone, $this->seenEmailPhones)) {
                     $this->seenEmailPhones[] = $emailPhone;
                     $this->totals['VoicepadUnique'][$region]++;
+                    $this->totals['VoicepadUnique']['Total']++;
+                    $this->totals['Combined'][$region]++;
+                    $this->totals['Combined']['Total']++;
                 }
+            } else {
+                $this->totals['Combined'][$region]++;
+                $this->totals['Combined']['Total']++;
             }
         }
     }
@@ -115,7 +135,11 @@ class Aggregate implements \JsonSerializable {
     }
 
     public function getPercent(/* string */ $source, /* string */ $region) {
-        return round($this->totals[$source][$region] / $this->totals['Combined'][$region] * 100);
+        if ($source == 'Combined') {
+            return round($this->totals[$source][$region] / $this->totals['Combined']['Total'] * 100);
+        } else {
+            return round($this->totals[$source][$region] / $this->totals['Combined'][$region] * 100);
+        }
     }
 
     public function jsonSerialize() {
