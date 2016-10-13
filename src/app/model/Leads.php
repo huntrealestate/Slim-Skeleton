@@ -12,12 +12,15 @@ class Leads {
     }
 
     public function getLeads(LeadsFetchParams $leadsFetchParams = null) {
+        $aggregate = new \App\Data\Aggregate();
         if (!isset($leadsFetchParams)) {
-            return $this->leads;
+            foreach($this->leads as $lead) {
+                $aggregate->addLead($lead);
+            }
+            return [ 'leads' => $this->leads, 'aggregate' => $aggregate ];
         }
 
         $outLeads = array();
-        $aggregate = new \App\Data\Aggregate();
         foreach($this->leads as $lead) {
             $leadDate = \DateTime::createFromFormat($leadsFetchParams->getFormat(), $lead->getDate());
             if ($leadDate >= $leadsFetchParams->getStartDate() && $leadDate <= $leadsFetchParams->getEndDate()) {

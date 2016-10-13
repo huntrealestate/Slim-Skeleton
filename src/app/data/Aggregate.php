@@ -135,10 +135,17 @@ class Aggregate implements \JsonSerializable {
     }
 
     public function getPercent(/* string */ $source, /* string */ $region) {
+        $denominator = 0;
         if ($source == 'Combined') {
-            return round($this->totals[$source][$region] / $this->totals['Combined']['Total'] * 100);
+            $denominator = $this->totals['Combined']['Total'];
         } else {
-            return round($this->totals[$source][$region] / $this->totals['Combined'][$region] * 100);
+            $denominator = $this->totals['Combined'][$region];
+        }
+
+        if ($denominator == 0) {
+            return 0;
+        } else {
+            return round($this->totals[$source][$region] / $denominator * 100);
         }
     }
 
