@@ -4,7 +4,58 @@
     </head>
     <body>
         <pre>
-            <?php echo "data: " . json_encode($data, JSON_PRETTY_PRINT); ?>
+            <?php /*echo "data: " . json_encode($data, JSON_PRETTY_PRINT); */?>
         </pre>
+        <table>
+            <?php $regions = ['Buffalo', 'Rochester', 'Syracuse', 'Capital', 'Arizona']; ?>
+            <tr>
+                <td>
+                </td>
+                <?php 
+                    foreach($regions as $region) {
+                ?>
+                <td>
+                    <?php 
+                        echo $region;
+                    ?>
+                </td>
+                <?php
+                    }
+                ?>
+            </tr>
+            <tr>
+                <td>
+                    Voicepad
+                </td>
+                <?php 
+                    foreach($regions as $region) {
+                ?>
+                <td>
+                    <?php 
+                        echo $data['aggregate']->getTotal('Voicepad', $region);
+                    ?>
+                </td>
+                <?php
+                    }
+                ?>
+            </tr>
+            <tr>
+                <td>
+                    Percent
+                </td>
+                <?php 
+                    foreach($regions as $region) {
+                ?>
+                <td>
+                    <?php 
+                        echo $data['aggregate']->getPercent('Voicepad', $region);
+                    ?>
+                </td>
+                <?php
+                    }
+                ?>
+            </tr>
+
+        </table>
     </body>
 </html>

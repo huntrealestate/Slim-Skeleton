@@ -27,6 +27,34 @@ class Lead implements \JsonSerializable {
         return $this->attributes['date_received'];
     }
 
+    public function getName() {
+        return $this->attributes['name'];
+    }
+
+    public function getEmailPhone() {
+        return $this->attributes['email_phone'];
+    }
+
+    public function getSource() {
+        return $this->attributes['source'];
+    }
+
+    public function getAddress() {
+        return $this->attributes['property_address'];
+    }
+
+    public function getAgent() {
+        return $this->attributes['agent'];
+    }
+
+    public function getOffice() {
+        return $this->attributes['office'];
+    }
+
+    public function getNotes() {
+        return $this->attributes['notes'];
+    }
+
     public function jsonSerialize() {
         return $this->attributes;
     }
