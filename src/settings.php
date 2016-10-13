@@ -1,4 +1,8 @@
 <?php
+ini_set('display_errors', 'On');
+ini_set('error_reporting', E_ALL);
+date_default_timezone_set('UTC');
+
 return [
     'settings' => [
         'displayErrorDetails' => true, // set to false in production

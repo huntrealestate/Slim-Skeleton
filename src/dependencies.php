@@ -32,9 +32,17 @@ $container['db'] = function ($container) {
 
 $container['model'] = function ($container) {
     $db = $container->get('db');
-    return null; //FIXME this doesn't work
+    
+    //make Leads model
+    $google_doc_id = '19Ya9gHRcS6dYFQX6aTJsbZmAfuNVpEB1lSG5a07_930';
+    $csv_url = "https://docs.google.com/spreadsheets/d/{$google_doc_id}/export?format=csv&id={$google_doc_id}";
+    $parser = new App\Utils\LeadCsvParser();
+    $csvDownloader = new App\Utils\LeadCsvDownloader( $parser, $csv_url );
+    $leads =  new App\Model\Leads($csvDownloader);
+    
     return [
-        'users' => \App\Model\User::from('users'),
+        'leads' => $leads,
+        //'users' => \App\Model\User::from('users'), //FIXME this doesn't work
     ];
 };
 
