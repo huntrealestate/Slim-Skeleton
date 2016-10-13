@@ -11,7 +11,18 @@ class Leads {
         }
     }
 
-    public function getLeads() {
-        return $this->leads;
+    public function getLeads(LeadsFetchParams $leadsFetchParams = null) {
+        if (!isset($leadsFetchParams)) {
+            return $this->leads;
+        }
+
+        $outLeads = array();
+        foreach($this->leads as $lead) {
+            $leadDate = \DateTime::createFromFormat($leadsFetchParams->getFormat(), $lead->getDate());
+            if ($leadDate >= $leadsFetchParams->getStartDate() && $leadDate <= $leadsFetchParams->getEndDate()) {
+                $outLeads[] = $lead;
+            }
+        }
+        return $outLeads;
     }
 }

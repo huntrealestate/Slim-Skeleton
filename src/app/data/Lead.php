@@ -23,6 +23,10 @@ class Lead implements \JsonSerializable {
         }
     }
 
+    public function getDate() {
+        return $this->attributes['date_received'];
+    }
+
     public function jsonSerialize() {
         return $this->attributes;
     }
