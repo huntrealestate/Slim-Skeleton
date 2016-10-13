@@ -45,7 +45,10 @@ $app->get( '/logout/', function () {
 
 //all of these require authentication first
 $app->group('/auth', function() {
-
+    
+    $this->get('/dashboard/', function($request, $response, $args){
+        return $this->renderer->render($response, 'dashboard.phtml', ['name' => 'Unnamed User' ]);
+    });
     $this->group('/dashboard/leads', function() {
     
         $this->get('/', function($request, $response, $args) {
