@@ -19,18 +19,52 @@
                     <table class="table table-hover">
                         <tbody>
                             <?php $regions = ['Buffalo', 'Rochester', 'Syracuse', 'Capital', 'Arizona', 'Total']; ?>
+
+                            <?php $lrsources = ['Huntrealestate.com (IDX)', 'ERA.com (Zap)', 'Homes.com', 'Homefinder.com', 'Hotpads.com', 'Trulia.com', 'Zillow.com', 'LeadRouter Total']; ?>
                             <tr>
                                 <td></td>
                                 <?php foreach($regions as $region) { ?>
-                                <th><?= $region; ?></th>
+                                <th class="text-right"><?= $region; ?></th>
                                 <?php } ?>
                             </tr>
                             <tr>
-                                <th>Voicepad</th>
-                                <?php foreach($regions as $region) { ?>
-                                <td><?= $data['aggregate']->getTotal('Voicepad', $region); ?> <span class="badge"><?= $data['aggregate']->getPercent('Voicepad', $region); ?>%</span></td>
-                                <?php } ?>
+                                <th colspan="7" scope="colgroup" class="text-center">LeadRouter</th>
                             </tr>
+                            <?php foreach($lrsources as $source) { ?>
+                                <tr>
+                                    <th><?= $source; ?></th>
+                                    <?php foreach($regions as $region) { ?>
+                                    <td class="text-right"><?= $data['aggregate']->getTotal($source, $region); ?> <span class="badge"><?= $data['aggregate']->getPercent($source, $region); ?>%</span></td>
+                                    <?php } ?>
+                                </tr>
+                            <?php } ?>
+                            
+                            <tr>
+                                <th colspan="7" scope="colgroup" class="text-center">AgentAchieve Dashboards</th>
+                            </tr>
+                                <tr>
+                                    <th>DTA - huntrealestate.com</th>
+                                    <?php foreach($regions as $region) { ?>
+                                    <td class="text-right"><?= $data['aggregate']->getTotal('DTA - huntrealestate.com', $region); ?> <span class="badge"><?= $data['aggregate']->getPercent('DTA - huntrealestate.com', $region); ?>%</span></td>
+                                    <?php } ?>
+                                </tr>
+
+                            <tr>
+                                <th colspan="7" scope="colgroup" class="text-center">VoicePad</th>
+                            </tr>
+                                <tr>
+                                    <th>Voicepad</th>
+                                    <?php foreach($regions as $region) { ?>
+                                    <td class="text-right"><?= $data['aggregate']->getTotal('Voicepad', $region);?></td>
+                                    <?php } ?>
+                                </tr>
+                                <tr>
+                                    <th>Voicepad Unique</th>
+                                    <?php foreach($regions as $region) { ?>
+                                    <td class="text-right"><?= $data['aggregate']->getTotal('VoicepadUnique', $region); ?> <span class="badge"><?= $data['aggregate']->getPercent('VoicepadUnique', $region); ?>%</span></td>
+                                    <?php } ?>
+                                </tr>
+
                             <tr>
                                 <th>Combined Total</th>
                                 <script>  </script>
