@@ -1,93 +1,202 @@
-<!DOCTYPE html>
-<html>
-    <head>
-    </head>
-    <body>
-        <pre>
-            <?php /*echo "data: " . json_encode($data, JSON_PRETTY_PRINT); */?>
-        </pre>
-        <table>
-            <?php $regions = ['Buffalo', 'Rochester', 'Syracuse', 'Capital', 'Arizona', 'Total']; ?>
-            <tr>
-                <td>
-                </td>
-                <?php 
-                    foreach($regions as $region) {
-                ?>
-                <td>
-                    <?php 
-                        echo $region;
-                    ?>
-                </td>
-                <?php
-                    }
-                ?>
-            </tr>
-            <tr>
-                <td>
-                    Voicepad
-                </td>
-                <?php 
-                    foreach($regions as $region) {
-                ?>
-                <td>
-                    <?php 
-                        echo $data['aggregate']->getTotal('Voicepad', $region);
-                    ?>
-                </td>
-                <?php
-                    }
-                ?>
-            </tr>
-            <tr>
-                <td>
-                    Percent
-                </td>
-                <?php 
-                    foreach($regions as $region) {
-                ?>
-                <td>
-                    <?php 
-                        echo $data['aggregate']->getPercent('Voicepad', $region);
-                    ?>
-                </td>
-                <?php
-                    }
-                ?>
-            </tr>
-            <tr>
-                <td>
-                    Combined Total
-                </td>
-                <?php 
-                    foreach($regions as $region) {
-                ?>
-                <td>
-                    <?php 
-                        echo $data['aggregate']->getTotal('Combined', $region);
-                    ?>
-                </td>
-                <?php
-                    }
-                ?>
-            </tr>
-            <tr>
-                <td>
-                    Combined Percent
-                </td>
-                <?php 
-                    foreach($regions as $region) {
-                ?>
-                <td>
-                    <?php 
-                        echo $data['aggregate']->getPercent('Combined', $region);
-                    ?>
-                </td>
-                <?php
-                    }
-                ?>
-            </tr>
+<?php include 'dashboard-head.phtml'; ?>
+<div class="fluid-container">
+    
+    <div class="row">
+        <div class="col-md-6">
+            <div class="box">
+            
+                <div class="box-header">
+                    <h3 class="box-title">Leads Summary</h3>
+                    
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                    </div>
+                </div><!-- /.box-header -->
+                
+                <div class="box-body table-responsive no-padding">
+                    <table class="table table-hover">
+                        <tbody>
+                            <?php $regions = ['Buffalo', 'Rochester', 'Syracuse', 'Capital', 'Arizona', 'Total']; ?>
+                            <tr>
+                                <td></td>
+                                <?php foreach($regions as $region) { ?>
+                                <th><?= $region; ?></th>
+                                <?php } ?>
+                            </tr>
+                            <tr>
+                                <th>Voicepad</th>
+                                <?php foreach($regions as $region) { ?>
+                                <td><?= $data['aggregate']->getTotal('Voicepad', $region); ?></td>
+                                <?php } ?>
+                            </tr>
+                            <tr>
+                                <th>Percent</th>
+                                <?php foreach($regions as $region) { ?>
+                                <td><span class=""><?= $data['aggregate']->getPercent('Voicepad', $region); ?>%</span></td>
+                                <?php } ?>
+                            </tr>
+                            <tr>
+                                <th>Combined Total</th>
+                                <script>  </script>
+                                <?php
+                                    //create pie data for later
+                                    $pieData = [];
+                                    $regionPieColors = ['f56954', 'f56954', 'f39c12', '3c8dbc', '00c0ef', 'd2d6de'];
+                                    $regionPieHighlights = ['f56954', 'f56954', 'f39c12', '3c8dbc', '00c0ef', 'd2d6de'];
+                                    foreach($regions as $region) { 
+                                        $nextCombinedTotal = $data['aggregate']->getTotal('Combined', $region);
+                                        //append a data segment for the pie chart
+                                        $pieData[] = [
+                                            'value' => $nextCombinedTotal,
+                                            'color' => '#'.array_shift($regionPieColors),
+                                            'highlight' => '#'.array_shift($regionPieHighlights),
+                                            'label' => $region
+                                        ];
+                                ?>
+                                <td><?= $nextCombinedTotal ?></td>
+                                <?php } ?>
+                            </tr>
+                            <tr>
+                                <th>Combined Percent</th>
+                                <?php foreach($regions as $region) { ?>
+                                <td><?= $data['aggregate']->getPercent('Combined', $region); ?></td>
+                                <?php } ?>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div><!-- /.box-body -->
+                
+            </div><!-- /.box -->
+        </div>
+        
+        <div class="col-md-6">
+            <!-- DONUT CHART -->
+            <div class="box box-danger">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Combined Total Chart</h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                    </div>
+                </div>
+                <div class="box-body">
+                    <canvas id="pieChart" style="height: 393px; width: 787px;" height="393" width="787"><script>
+$(function(){
+    //-------------
+    //- PIE CHART -
+    //-------------
+    // Get context with jQuery - using jQuery's .get() method.
+    var pieChart = new Chart( $("#pieChart").get(0).getContext("2d") );
+    var PieData = <?= json_encode($pieData); ?>;
+    var pieOptions = {
+      //Boolean - Whether we should show a stroke on each segment
+      segmentShowStroke: true,
+      //String - The colour of each segment stroke
+      segmentStrokeColor: "#fff",
+      //Number - The width of each segment stroke
+      segmentStrokeWidth: 2,
+      //Number - The percentage of the chart that we cut out of the middle
+      percentageInnerCutout: 50, // This is 0 for Pie charts
+      //Number - Amount of animation steps
+      animationSteps: 100,
+      //String - Animation easing effect
+      animationEasing: "easeOutBounce",
+      //Boolean - Whether we animate the rotation of the Doughnut
+      animateRotate: true,
+      //Boolean - Whether we animate scaling the Doughnut from the centre
+      animateScale: false,
+      //Boolean - whether to make the chart responsive to window resizing
+      responsive: true,
+      // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
+      maintainAspectRatio: true,
+      //String - A legend template
+      legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor%>\"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>"
+    };
+    //Create pie or douhnut chart
+    // You can switch between pie and douhnut using the method below.
+    pieChart.Doughnut(PieData, pieOptions);
+});
+                    </script></canvas>
+                </div><!-- /.box-body -->
+            </div><!-- /.box -->
+        </div>
+        
+        <div class="col-md-12">
+            <div class="box">
+            
+                <div class="box-header">
+                    <h3 class="box-title">Leads Data</h3>
+                    
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                    </div>
+                    <!--
+                    <div class="box-tools">
+                        <div class="input-group input-group-sm" style="width: 150px;">
+                            <input type="text" name="table_search" class="form-control pull-right" placeholder="Search">
 
-        </table>
-    </body>
-</html>
+                            <div class="input-group-btn">
+                                <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    -->
+                </div><!-- /.box-header -->
+                
+                <div class="box-body table-responsive no-padding">
+                    <table class="table table-hover">
+                        <tbody>
+                            <tr>
+                                <th>Date</th>
+                                <th>Name</th>
+                                <th>Email/Phone</th>
+                                <th>Source</th>
+                                <th>Property</th>
+                                <th>Agent</th>
+                                <th>Office</th>
+                                <th>Notes</th>
+                            </tr>
+                            <?php foreach($data['leads'] as $lead) { ?>
+                                <tr>
+                                    <?php foreach($lead->jsonSerialize() as $value) { ?>
+                                        <td><?= htmlspecialchars($value); ?></td>
+                                    <?php } ?>
+                                </tr>
+                            <?php } ?>
+                        </tbody>
+                    </table>
+                </div><!-- /.box-body -->
+                
+            </div><!-- /.box -->
+        </div>
+    </div><!--/row-->
+    
+    <?php /*
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+            
+                <div class="box-header">
+                    <h3 class="box-title">Leads Raw Data</h3>
+                    
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                    </div>
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                    <pre><?= var_export($data, 1); ?></pre>
+                </div><!-- /.box-body -->
+            </div><!-- /.box -->
+        </div>
+    </div><!--/row-->
+    */?>
+    
+</div><!--/.fluid-container-->
+<?php include 'dashboard-foot.phtml'; ?>

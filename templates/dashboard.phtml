@@ -1,10 +1,12 @@
 <?php include 'dashboard-head.phtml'; ?>
-
-<h1>Profile</h1>
-        <?php if (isset($name)) : ?>
-            <h2>Hello and welcome to <?= htmlspecialchars($name); ?>'s dashboard!</h2>
+<div class="fluid-container">
+    <div class="row">
+        <h1>Profile</h1>
+        <?php if (isset($user) && isset($user['name'])) : ?>
+            <h2>Hello and welcome to <?= htmlspecialchars($user['name']); ?>'s dashboard!</h2>
         <?php else: ?>
             <p>This profile was not found</p>
         <?php endif; ?>
-
+    </div><!--/row-->
+</div><!--/.fluid-container-->
 <?php include 'dashboard-foot.phtml'; ?>
