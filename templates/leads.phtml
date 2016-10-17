@@ -1,78 +1,93 @@
-<?php include 'dashboard-head.phtml'; ?>
+<?php
+
+include 'dashboard-head.phtml';
+$regions = ['Buffalo', 'Rochester', 'Syracuse', 'Capital', 'Arizona', 'Total'];
+$lrsources = ['Huntrealestate.com (IDX)', 'ERA.com (Zap)', 'Homes.com', 'Homefinder.com', 'Hotpads.com', 'Zillow.com', 'LeadRouter Total'];
+
+?>
 <div class="fluid-container">
-    
+
     <div class="row">
         <div class="col-md-8">
             <div class="box">
-            
+
                 <div class="box-header">
                     <h3 class="box-title">Leads Summary</h3>
-                    
+
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                         </button>
                         <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
                     </div>
                 </div><!-- /.box-header -->
-                
+
                 <div class="box-body table-responsive no-padding">
+
+                    <!-- Leads Summary Table -->
                     <table class="table table-hover">
                         <tbody>
-                            <?php $regions = ['Buffalo', 'Rochester', 'Syracuse', 'Capital', 'Arizona', 'Total']; ?>
 
-                            <?php $lrsources = ['Huntrealestate.com (IDX)', 'ERA.com (Zap)', 'Homes.com', 'Homefinder.com', 'Hotpads.com', 'Trulia.com', 'Zillow.com', 'LeadRouter Total']; ?>
+                            <!-- LeadRouter Subsection -->
                             <tr>
                                 <td></td>
                                 <?php foreach($regions as $region) { ?>
-                                <th class="text-right"><?= $region; ?></th>
+                                <th scope="col" class="text-right"><?= $region; ?></th>
                                 <?php } ?>
                             </tr>
+
+                            <!-- LeadRouter Subsection -->
                             <tr>
-                                <th colspan="7" scope="colgroup">LeadRouter</th>
+                                <th class="table-subsection-header" colspan="7" scope="colgroup">LeadRouter</th>
                             </tr>
                             <?php foreach($lrsources as $source) { ?>
                                 <tr>
-                                    <th class="text-right"><?= $source; ?></th>
+                                    <th scope="row" class="text-right"><?= $source; ?></th>
                                     <?php foreach($regions as $region) { ?>
                                     <td class="text-right"><?= $data['aggregate']->getTotal($source, $region); ?> <span class="badge"><?= $data['aggregate']->getPercent($source, $region); ?>%</span></td>
                                     <?php } ?>
                                 </tr>
                             <?php } ?>
-                            
-                            <tr>
-                                <th colspan="7" scope="colgroup">AgentAchieve Dashboards</th>
-                            </tr>
-                                <tr>
-                                    <th class="text-right">DTA - huntrealestate.com</th>
-                                    <?php foreach($regions as $region) { ?>
-                                    <td class="text-right"><?= $data['aggregate']->getTotal('DTA - huntrealestate.com', $region); ?> <span class="badge"><?= $data['aggregate']->getPercent('DTA - huntrealestate.com', $region); ?>%</span></td>
-                                    <?php } ?>
-                                </tr>
 
+                            <!-- Agent Achieve Subsection -->
                             <tr>
-                                <th colspan="7" scope="colgroup">VoicePad</th>
+                                <th class="table-subsection-header" colspan="7" scope="colgroup">AgentAchieve Dashboards</th>
                             </tr>
-                                <tr>
-                                    <th class="text-right">Voicepad</th>
-                                    <?php foreach($regions as $region) { ?>
-                                    <td class="text-right"><?= $data['aggregate']->getTotal('Voicepad', $region);?></td>
-                                    <?php } ?>
-                                </tr>
-                                <tr>
-                                    <th class="text-right">Voicepad Unique</th>
-                                    <?php foreach($regions as $region) { ?>
-                                    <td class="text-right"><?= $data['aggregate']->getTotal('VoicepadUnique', $region); ?> <span class="badge"><?= $data['aggregate']->getPercent('VoicepadUnique', $region); ?>%</span></td>
-                                    <?php } ?>
-                                </tr>
-
                             <tr>
-                                <th>Combined Total</th>
+                                <th scope="row" class="text-right">DTA - huntrealestate.com</th>
+                                <?php foreach($regions as $region) { ?>
+                                <td class="text-right"><?= $data['aggregate']->getTotal('DTA - huntrealestate.com', $region); ?> <span class="badge"><?= $data['aggregate']->getPercent('DTA - huntrealestate.com', $region); ?>%</span></td>
+                                <?php } ?>
+                            </tr>
+
+                            <!-- VoicePad Subsection -->
+                            <tr>
+                                <th class="table-subsection-header" colspan="7" scope="colgroup">VoicePad</th>
+                            </tr>
+                            <tr>
+                                <th scope="row" class="text-right">Voicepad</th>
+                                <?php foreach($regions as $region) { ?>
+                                <td class="text-right"><?= $data['aggregate']->getTotal('Voicepad', $region);?></td>
+                                <?php } ?>
+                            </tr>
+                            <tr>
+                                <th scope="row" class="text-right">Voicepad Unique</th>
+                                <?php foreach($regions as $region) { ?>
+                                <td class="text-right"><?= $data['aggregate']->getTotal('VoicepadUnique', $region); ?> <span class="badge"><?= $data['aggregate']->getPercent('VoicepadUnique', $region); ?>%</span></td>
+                                <?php } ?>
+                            </tr>
+
+                            <!-- Combined Subsection -->
+                            <tr>
+                                <th class="table-subsection-header" colspan="7" scope="colgroup"></th>
+                            </tr>
+                            <tr>
+                                <th scope="row">Combined Total</th>
                                 <?php
                                     //create pie data for later
                                     $pieData = [];
                                     $regionPieColors = ['f56954', '00a65a', 'f39c12', '3c8dbc', '00c0ef', 'd2d6de'];
                                     $regionPieHighlights = ['f56954', '00a65a', 'f39c12', '3c8dbc', '00c0ef', 'd2d6de'];
-                                    foreach($regions as $region) { 
+                                    foreach($regions as $region) {
                                         $nextCombinedTotal = $data['aggregate']->getTotal('Combined', $region);
                                         if(strcasecmp( $region, "total" ) != 0){ //skip any "total" regions
                                             //append a data segment for the pie chart
@@ -90,10 +105,10 @@
                         </tbody>
                     </table>
                 </div><!-- /.box-body -->
-                
+
             </div><!-- /.box -->
         </div>
-        
+
         <div class="col-md-4">
             <!-- DONUT CHART -->
             <div class="box box-danger">
@@ -145,19 +160,19 @@ $(function(){
     //Create pie or douhnut chart
     // You can switch between pie and douhnut using the method below.
     pieChart.Doughnut(PieData, pieOptions);
-    
+
 });
                     </script></canvas>
                 </div><!-- /.box-body -->
             </div><!-- /.box -->
         </div>
-        
+
         <div class="col-md-12">
             <div class="box">
-            
+
                 <div class="box-header">
                     <h3 class="box-title">Leads Data</h3>
-                    
+
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                         </button>
@@ -175,7 +190,7 @@ $(function(){
                     </div>
                     -->
                 </div><!-- /.box-header -->
-                
+
                 <div class="box-body table-responsive no-padding">
                     <table class="table table-hover">
                         <tbody>
@@ -199,19 +214,19 @@ $(function(){
                         </tbody>
                     </table>
                 </div><!-- /.box-body -->
-                
+
             </div><!-- /.box -->
         </div>
     </div><!--/row-->
-    
+
     <?php /*
     <div class="row">
         <div class="col-xs-12">
             <div class="box">
-            
+
                 <div class="box-header">
                     <h3 class="box-title">Leads Raw Data</h3>
-                    
+
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                         </button>
@@ -225,6 +240,6 @@ $(function(){
         </div>
     </div><!--/row-->
     */?>
-    
+
 </div><!--/.fluid-container-->
 <?php include 'dashboard-foot.phtml'; ?>
