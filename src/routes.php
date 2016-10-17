@@ -2,10 +2,21 @@
 
 // Routes
 
+function renderWithLayout($renderer, $response, $template, $layout, $data=[]){
+    $renderer->addAttribute('content_template', $template);
+    $renderer->addAttribute('response', $response);
+    return $renderer->render($response, $layout, $data);
+}
+
 $app->group('/login', function() {
 
-    $this->get( '/', function () {
-        return $this->renderer->render($response, 'login.phtml');
+    $this->get( '/', function ($request, $response, $args) {
+        return renderWithLayout(
+            $this->renderer,
+            $response,
+            'login.phtml',
+            'layouts/simple-layout.phtml'
+        );
     });
 
     $this->get( '/:idp', function ($request, $response, $args) {
@@ -45,45 +56,74 @@ $app->get( '/logout/', function () {
 
 //all of these require authentication first
 $app->group('/auth', function() {
-    
+
     $this->get('/dashboard/', function($request, $response, $args){
-        return $this->renderer->render($response, 'dashboard.phtml', ['name' => 'Unnamed User' ]);
+        return renderWithLayout(
+            $this->renderer,
+            $response,
+            'dashboard.phtml',
+            'layouts/dashboard-layout.phtml',
+            ['name' => 'Unnamed User' ]
+        );
     });
     $this->group('/dashboard/leads', function() {
-    
+
         $this->get('/', function($request, $response, $args) {
             $endDate = new DateTime();
             $endDate->setTime(0, 0, 0);
             $startDate = clone($endDate);
             $startDate->sub(new DateInterval('P7D'));
-            $leadsFetchParams = new App\Model\LeadsFetchParams( $startDate, $endDate, 'm/d/Y' );
-            $leads = $this->model['leads']->getLeads($leadsFetchParams);
-            return $this->renderer->render($response, 'leads.phtml', ['data' => $leads ]);
+            $params = new App\Model\LeadsFetchParams( $startDate, $endDate, 'm/d/Y' );
+            $leads = $this->model['leads']->getLeads($params);
+            return renderWithLayout(
+                $this->renderer,
+                $response,
+                'leads.phtml',
+                'layouts/dashboard-layout.phtml',
+                ['data' => $leads ]
+            );
         });
-        
+
         $this->get('/all/', function($request, $response, $args) {
-            $leads = array();
             $leads = $this->model['leads']->getLeads();
-            return $this->renderer->render($response, 'leads.phtml', ['data' => $leads ]);
+            return renderWithLayout(
+                $this->renderer,
+                $response,
+                'leads.phtml',
+                'layouts/dashboard-layout.phtml',
+                ['data' => $leads ]
+            );
         });
 
         $this->get('/{year}/{month}/{day}/', function($request, $response, $args) {
             $endDate = DateTime::CreateFromFormat('Y/m/d', $args['year'] . '/' . $args['month'] . '/' . $args['day']);
             $startDate = clone($endDate);
             $startDate->sub(new DateInterval('P7D'));
-            $leadsFetchParams = new App\Model\LeadsFetchParams( $startDate, $endDate, 'm/d/Y' );
-            $leads = $this->model['leads']->getLeads($leadsFetchParams);
-            return $this->renderer->render($response, 'leads.phtml', [ 'data' => $leads ]);
+            $params = new App\Model\LeadsFetchParams( $startDate, $endDate, 'm/d/Y' );
+            $leads = $this->model['leads']->getLeads($params);
+            return renderWithLayout(
+                $this->renderer,
+                $response,
+                'leads.phtml',
+                'layouts/dashboard-layout.phtml',
+                ['data' => $leads ]
+            );
         });
 
         $this->get('/{start_year}/{start_month}/{start_day}/{end_year}/{end_month}/{end_day}/', function($request, $response, $args) {
             $endDate = DateTime::CreateFromFormat('Y/m/d', $args['end_year'] . '/' . $args['end_month'] . '/' . $args['end_day']);
             $startDate = DateTime::CreateFromFormat('Y/m/d', $args['start_year'] . '/' . $args['start_month'] . '/' . $args['start_day']);
-            $leadsFetchParams = new App\Model\LeadsFetchParams( $startDate, $endDate, 'm/d/Y' );
-            $leads = $this->model['leads']->getLeads($leadsFetchParams);
-            return $this->renderer->render($response, 'leads.phtml', [ 'data' => $leads ]);
+            $params = new App\Model\LeadsFetchParams( $startDate, $endDate, 'm/d/Y' );
+            $leads = $this->model['leads']->getLeads($params);
+            return renderWithLayout(
+                $this->renderer,
+                $response,
+                'leads.phtml',
+                'layouts/dashboard-layout.phtml',
+                ['data' => $leads ]
+            );
         });
-        
+
     });
 
 })->add( new \App\Middleware\AuthenticationMiddleware() );
