@@ -21,9 +21,9 @@ class AuthenticationMiddleware
             $app->redirect( '/login/' );
         }
         */
-        $response->getBody()->write('BEFORE AUTHENTICATION');
+        $response->getBody()->write('<!--BEFORE AUTHENTICATION-->');
         $response = $next($request, $response);
-        $response->getBody()->write('AFTER AUTHENTICATION');
+        $response->getBody()->write('<!--AFTER AUTHENTICATION-->');
 
         return $response;
     }

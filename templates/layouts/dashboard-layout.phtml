@@ -7,9 +7,11 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>AdminLTE 2 | Starter</title>
+        <title>HuntBID| [[PAGE TITLE]]</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+        
+    <!-- start: CSS-->
         <!-- Bootstrap 3.3.6 -->
         <link rel="stylesheet" href="/vendor/adminlte/bootstrap/css/bootstrap.min.css">
         <!-- Font Awesome -->
@@ -23,22 +25,51 @@
             apply the skin class to the body tag so the changes take effect.
             -->
         <link rel="stylesheet" href="/vendor/adminlte/dist/css/skins/skin-blue.min.css">
+        <link rel="stylesheet" href="/css/dashboard.css"> <!--TODO only include this on the dashboard? -->
+    <!-- end: CSS-->
+        
+    <!-- start: JavaScript-->
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
         <script src="https:////oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
         <script src="https:////oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
-        
-        <!-- REQUIRED JS SCRIPTS -->
         <!-- jQuery 2.2.3 -->
         <script src="/vendor/adminlte/plugins/jQuery/jquery-2.2.3.min.js"></script>
+        <script src="/vendor/adminlte/dist/js/jquery-migrate-1.0.0.min.js"></script>
+		<script src="/vendor/adminlte/dist/js/jquery-ui-1.10.0.custom.min.js"></script>
+		<script src="/vendor/adminlte/dist/js/jquery.ui.touch-punch.js"></script>
+		<script src="/vendor/adminlte/dist/js/modernizr.js"></script>
         <!-- Bootstrap 3.3.6 -->
         <script src="/vendor/adminlte/bootstrap/js/bootstrap.min.js"></script>
-        <!-- ChartJS 1.0.1 -->
-        <script src="/vendor/adminlte/plugins/chartjs/Chart.min.js"></script>
+		<script src="/vendor/adminlte/dist/js/jquery.cookie.js"></script>
+		<script src='/vendor/adminlte/dist/js/fullcalendar.min.js'></script>
+		<script src='/vendor/adminlte/dist/js/jquery.dataTables.min.js'></script>
+		<script src="/vendor/adminlte/dist/js/excanvas.js"></script>
+        <script src="/vendor/adminlte/dist/js/jquery.flot.js"></script>
+        <script src="/vendor/adminlte/dist/js/jquery.flot.pie.js"></script>
+        <script src="/vendor/adminlte/dist/js/jquery.flot.stack.js"></script>
+        <script src="/vendor/adminlte/dist/js/jquery.flot.resize.min.js"></script>
+		<script src="/vendor/adminlte/dist/js/jquery.chosen.min.js"></script>
+		<script src="/vendor/adminlte/dist/js/jquery.uniform.min.js"></script>
+		<script src="/vendor/adminlte/dist/js/jquery.cleditor.min.js"></script>
+		<script src="/vendor/adminlte/dist/js/jquery.noty.js"></script>
+		<script src="/vendor/adminlte/dist/js/jquery.elfinder.min.js"></script>
+		<script src="/vendor/adminlte/dist/js/jquery.raty.min.js"></script>
+		<script src="/vendor/adminlte/dist/js/jquery.iphone.toggle.js"></script>
+		<script src="/vendor/adminlte/dist/js/jquery.uploadify-3.1.min.js"></script>
+		<script src="/vendor/adminlte/dist/js/jquery.gritter.min.js"></script>
+		<script src="/vendor/adminlte/dist/js/jquery.imagesloaded.js"></script>
+		<script src="/vendor/adminlte/dist/js/jquery.masonry.min.js"></script>
+		<script src="/vendor/adminlte/dist/js/jquery.knob.modified.js"></script>
+		<script src="/vendor/adminlte/dist/js/jquery.sparkline.min.js"></script>
+		<script src="/vendor/adminlte/dist/js/counter.js"></script>
+		<script src="/vendor/adminlte/dist/js/retina.js"></script>
         <!-- FastClick -->
         <script src="/vendor/adminlte/plugins/fastclick/fastclick.js"></script>
+        <!-- ChartJS 1.0.1 -->
+        <script src="/vendor/adminlte/plugins/chartjs/Chart.min.js"></script>
         <!-- AdminLTE App -->
         <script src="/vendor/adminlte/dist/js/app.min.js"></script>
         <!-- Optionally, you can add Slimscroll and FastClick plugins.
@@ -49,6 +80,8 @@
         <script src="/vendor/adminlte/plugins/datatables/jquery.dataTables.min.js"></script>
         <script src="/vendor/adminlte/plugins/datatables/dataTables.bootstrap.min.js"></script>
         <link rel="stylesheet" href="/css/dashboard.css">
+		<script src="/vendor/adminlte/dist/js/custom.js"></script>
+    <!-- end: JavaScript-->
     </head>
     <!--
         BODY TAG OPTIONS:
@@ -300,4 +333,90 @@
                 </section>
                 <!-- Main content -->
                 <section class="content">
-                    <!-- Your Page Content Here -->
+                    <?php include __DIR__ . '/../'.$content_template; ?>
+                </section>
+                <!-- /.content -->
+            </div>
+            <!-- /.content-wrapper -->
+            <!-- Main Footer -->
+            <footer class="main-footer">
+                <!-- To the right -->
+                <div class="pull-right hidden-xs">
+                    [[FOOTER MESSAGE]]
+                </div>
+                <!-- Default to the left -->
+                <strong>Copyright &copy; 2016 <a href="/vendor/adminlte/#">[[COMPANY NAME]]</a>.</strong> All rights reserved.
+            </footer>
+            <!-- Control Sidebar -->
+            <aside class="control-sidebar control-sidebar-dark">
+                <!-- Create the tabs -->
+                <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
+                    <li class="active"><a href="/vendor/adminlte/#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
+                    <li><a href="/vendor/adminlte/#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
+                </ul>
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <!-- Home tab content -->
+                    <div class="tab-pane active" id="control-sidebar-home-tab">
+                        <h3 class="control-sidebar-heading">Recent Activity</h3>
+                        <ul class="control-sidebar-menu">
+                            <li>
+                                <a href="javascript::;">
+                                    <i class="menu-icon fa fa-birthday-cake bg-red"></i>
+                                    <div class="menu-info">
+                                        <h4 class="control-sidebar-subheading">[[An activity title]]</h4>
+                                        <p>[[The activity's description]]</p>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                        <!-- /.control-sidebar-menu -->
+                        <h3 class="control-sidebar-heading">Tasks Progress</h3>
+                        <ul class="control-sidebar-menu">
+                            <li>
+                                <a href="/vendor/adminlte/javascript::;">
+                                    <h4 class="control-sidebar-subheading">
+                                        [[A Task Name]]
+                                        <span class="pull-right-container">
+                                        <span class="label label-danger pull-right">70%</span>
+                                        </span>
+                                    </h4>
+                                    <div class="progress progress-xxs">
+                                        <div class="progress-bar progress-bar-danger" style="width: 70%"></div>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                        <!-- /.control-sidebar-menu -->
+                    </div>
+                    <!-- /.tab-pane -->
+                    <!-- Stats tab content -->
+                    <div class="tab-pane" id="control-sidebar-stats-tab">Stats Tab Content</div>
+                    <!-- /.tab-pane -->
+                    <!-- Settings tab content -->
+                    <div class="tab-pane" id="control-sidebar-settings-tab">
+                        <form method="post">
+                            <h3 class="control-sidebar-heading">General Settings</h3>
+                            <div class="form-group">
+                                <label class="control-sidebar-subheading">
+                                    [[Setting Lorem Ipsum]]
+                                <input type="checkbox" class="pull-right" checked>
+                                </label>
+                                <p>
+                                    [[Some information about this general settings option.]]
+                                </p>
+                            </div>
+                            <!-- /.form-group -->
+                        </form>
+                    </div>
+                    <!-- /.tab-pane -->
+                </div>
+            </aside>
+            <!-- /.control-sidebar -->
+            <!-- Add the sidebar's background. This div must be placed
+                immediately after the control sidebar -->
+            <div class="control-sidebar-bg"></div>
+        </div>
+        <!-- ./wrapper -->
+    </body>
+</html>
