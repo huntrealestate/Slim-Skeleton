@@ -63,10 +63,10 @@ class BaseTestCase extends \PHPUnit_Framework_TestCase
     protected function getApp()
     {
         //autoload vendor classes
-        require __DIR__ . '/../../vendor/autoload.php';
+        require_once __DIR__ . '/../../vendor/autoload.php';
 
         //autoload our classes
-        require __DIR__ . '/../../src/autoload.php';
+        require_once __DIR__ . '/../../src/autoload.php';
 
         // Use the application settings
         $settings = require __DIR__ . '/../../src/settings.php';
@@ -75,15 +75,15 @@ class BaseTestCase extends \PHPUnit_Framework_TestCase
         $app = new App($settings);
 
         // Set up dependencies
-        require __DIR__ . '/../../src/dependencies.php';
+        require_once __DIR__ . '/../../src/dependencies.php';
 
         // Register middleware
         if ($this->withMiddleware) {
-            require __DIR__ . '/../../src/middleware.php';
+            require_once __DIR__ . '/../../src/middleware.php';
         }
 
         // Register routes
-        require __DIR__ . '/../../src/routes.php';
+        require_once __DIR__ . '/../../src/routes.php';
 
         return $app;
     }
