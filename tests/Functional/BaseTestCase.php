@@ -62,6 +62,12 @@ class BaseTestCase extends \PHPUnit_Framework_TestCase
 
     protected function getApp()
     {
+        //autoload vendor classes
+        require __DIR__ . '/../../vendor/autoload.php';
+
+        //autoload our classes
+        require __DIR__ . '/../../src/autoload.php';
+
         // Use the application settings
         $settings = require __DIR__ . '/../../src/settings.php';
 
