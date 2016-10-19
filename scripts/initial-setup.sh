@@ -33,3 +33,5 @@ echo restarting dev things
 echo checking log access
 touch /home/ec2-user/huntbid/logs/error.log
 chmod a+rw /home/ec2-user/huntbid/logs/error.log
+touch /home/ec2-user/huntbid/logs/app.log
+chmod a+rw /home/ec2-user/huntbid/logs/app.log

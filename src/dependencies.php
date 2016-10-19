@@ -46,13 +46,12 @@ $container['model'] = function ($container) {
     ];
 };
 
-//hybridauth
+// hybridauth
 $container['hybridauth'] = function($container) {
-    Hybrid_Endpoint::process();
     return new Hybrid_Auth($container->get('settings')['hybridauth']);
 };
 
-//HybridAuth socialauth implementation
+// socialauth implementation
 $container['socialauth'] = function($container) {
     return new \App\SocialLogin( $container->get('model')['users'] );
 };
