@@ -21,7 +21,7 @@ class AuthenticationMiddleware
     {
         $this->app->getContainer()->logger->addDebug("Checking user authentication");
         $this->app->getContainer()->hybridauth;
-        $session_identifier = Hybrid_Auth::storage()->get('user');
+        $session_identifier = \Hybrid_Auth::storage()->get('user');
         if (is_null( $session_identifier ) && $this->app->request()->getPathInfo() != '/login/') {
             $thisapp->getContainer()->logger->addInfo("User requires authentication, rerouting to login");
             $this->app->redirect( '/login/' );

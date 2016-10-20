@@ -27,4 +27,15 @@ DROP TABLE users;
         ]]></rollback>
     </changeSet>
 
+    <changeSet id="rename-update-and-create-columns-users" author="Ian T Small">
+        <sql><![CDATA[
+ALTER TABLE users CHANGE COLUMN update_timestamp updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
+ALTER TABLE users CHANGE COLUMN create_timestamp created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
+        ]]></sql>
+        <rollback><![CDATA[
+ALTER TABLE users CHANGE COLUMN updated_at update_timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
+ALTER TABLE users CHANGE COLUMN created_at create_timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
+        ]]></rollback>
+    </changeSet>
+
 </databaseChangeLog>
