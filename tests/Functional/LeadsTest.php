@@ -11,7 +11,7 @@ class LeadsTest extends BaseTestCase
     */
     public function testGetAuthPages()
     {
-        $response=$this->runApp('GET', '/auth/');
+        $response=$this->runApp('GET', '/auth/dashboard/leads/all/');
         
         $this->assertEquals(200, $response->getStatusCode());
     }
@@ -21,9 +21,11 @@ class LeadsTest extends BaseTestCase
     */
     public function testGetLoginPage()
     {
-        $response=$this->runApp('GET', '/login/');
-        
+        $response=$this->runApp('GET', '/login/');    
         $this->assertEquals(200, $response->getStatusCode());
+        $response=$this->runApp('GET', '/login');    
+        $this->assertEquals(200, $response->getStatusCode());
+   
     }
 
     /**
@@ -32,7 +34,9 @@ class LeadsTest extends BaseTestCase
     public function testGetLogoutPage()
     {
         $response=$this->runApp('GET', '/logout/');
-        
         $this->assertEquals(200, $response->getStatusCode());
+        $response=$this->runApp('GET', '/logout');
+        $this->assertEquals(200, $response->getStatusCode());
+
     }
 }
