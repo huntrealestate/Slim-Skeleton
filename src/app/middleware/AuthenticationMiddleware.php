@@ -2,8 +2,14 @@
 namespace App\Middleware;
 class AuthenticationMiddleware
 {
+    private $app;
+    
+    public function __construct( \Slim\App $app) {
+        $this->app = $app;
+    }
+    
     /**
-     * Example middleware invokable class
+     * Authentication middleware invokable class
      *
      * @param  \Psr\Http\Message\ServerRequestInterface $request  PSR7 request
      * @param  \Psr\Http\Message\ResponseInterface      $response PSR7 response
@@ -13,18 +19,14 @@ class AuthenticationMiddleware
      */
     public function __invoke($request, $response, $next)
     {
-        //TODO write authentication method
-        /*
-        $app->hybridInstance;
-        $session_identifier = Hybrid_Auth::storage()->get('user');
-        if (is_null( $session_identifier ) && $app->request()->getPathInfo() != '/login/') {
-            $app->redirect( '/login/' );
+        $this->app->getContainer()->logger->addDebug("Checking user authentication");
+        $this->app->getContainer()->hybridauth;
+        $session_identifier = \Hybrid_Auth::storage()->get('user');
+        if (is_null( $session_identifier ) && $this->app->request()->getPathInfo() != '/login/') {
+            $thisapp->getContainer()->logger->addInfo("User requires authentication, rerouting to login");
+            $this->app->redirect( '/login/' );
         }
-        */
-        $response->getBody()->write('<!--BEFORE AUTHENTICATION-->');
-        $response = $next($request, $response);
-        $response->getBody()->write('<!--AFTER AUTHENTICATION-->');
-
-        return $response;
+        $this->app->getContainer()->logger->addDebug("User authenticated");
+        return $next($request, $response);
     }
 }

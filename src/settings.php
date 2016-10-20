@@ -23,8 +23,8 @@ return [
         // OAuth Credentials
         'oAuthCreds' => [
             'google' => [
-                'client_id' => 'your_client_id',
-                'client_secret' => 'your_client_secret',
+                'client_id' => '454454942361-umnh6drfmmc5sjonpivlm536os20tokb.apps.googleusercontent.com',
+                'client_secret' => 'AVrWcKSuJOj9ko-piec6UIvR',
                 'application_name' => 'Hunt BIDS',
             ]
         ],
@@ -44,45 +44,11 @@ return [
         ],
 
         'hybridauth' => [
-			"base_url" => "http://dev-huntbid.huntcorp.co",
+			"base_url" => "http://ian.dev-huntbid.huntcorp.co/hybrid/",
 			"providers" => [
-				// openid providers
-				"OpenID" => [
-					"enabled" => false
-				],
-				"Yahoo" => [
-					"enabled" => false,
-					"keys" => ["key" => "", "secret" => ""],
-				],
-				"AOL" => [
-					"enabled" => false
-				],
 				"Google" => [
 					"enabled" => true,
-					"keys" => ["id" => "", "secret" => ""],
-				],
-				"Facebook" => [
-					"enabled" => false,
-					"keys" => ["id" => "", "secret" => ""],
-					"trustForwarded" => false
-				],
-				"Twitter" => [
-					"enabled" => false,
-					"keys" => ["key" => "", "secret" => ""],
-					"includeEmail" => false
-				],
-				// windows live
-				"Live" => [
-					"enabled" => false,
-					"keys" => ["id" => "", "secret" => ""]
-				],
-				"LinkedIn" => [
-					"enabled" => false,
-					"keys" => ["key" => "", "secret" => ""]
-				],
-				"Foursquare" => [
-					"enabled" => false,
-					"keys" => ["id" => "", "secret" => ""]
+					"keys" => ["id" => "454454942361-umnh6drfmmc5sjonpivlm536os20tokb.apps.googleusercontent.com", "secret" => "AVrWcKSuJOj9ko-piec6UIvR"],
 				],
 			],
 			// If you want to enable logging, set 'debug_mode' to true.
