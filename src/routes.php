@@ -1,11 +1,9 @@
 <?php
 
 // Routes
-require_once __DIR__ . '/app/helpers/RouteHelpers.php';
-
 //login
 $app->group('/login', function() {
- 
+
     $this->get( '/', function ($request, $response, $args) {
         return \App\Controller\BaseController::renderWithLayout(
             $this->renderer,
@@ -14,7 +12,7 @@ $app->group('/login', function() {
             'layouts/simple-layout.phtml'
         );
     });
-    
+
     $this->get( '/{idp}/',  function ($request, $response, $args) {
         //TODO get some error handling in
         $this->logger->addDebug("Logging in user with '{$args['idp']}'");
@@ -78,18 +76,23 @@ $app->get( '/hybrid/', function ($request, $response, $args) {
 
 //all of these require authentication first
 $app->group('/auth', function() {
-    
+
     //dashboard controller
     $this->get('/dashboard/', function ($request, $response, $args) {
+
+        //example of getting the model
+        $this->model;
+        $session_information = \App\Model\User::getCurrentSessionUser();
+
         return \App\Controller\BaseController::renderWithLayout(
             $this->renderer,
             $response,
             'welcome.phtml',
             'layouts/welcome-layout.phtml',
-            ['name' => 'Unnamed User' ]
+            ['session_user' => $session_information->toArray() ]
         );
     });
-    
+
     //leads controller
     $this->group('/dashboard/leads', function() {
         $this->get('/', function ($request, $response, $args) {
@@ -147,5 +150,5 @@ $app->group('/auth', function() {
             );
         });
     });
-    
+
 })->add( new \App\Middleware\AuthenticationMiddleware( $app ) );
