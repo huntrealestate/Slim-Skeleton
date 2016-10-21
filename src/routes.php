@@ -87,8 +87,8 @@ $app->group('/auth', function() {
         return \App\Controller\BaseController::renderWithLayout(
             $this->renderer,
             $response,
-            'dashboard.phtml',
-            'layouts/dashboard-layout.phtml',
+            'welcome.phtml',
+            'layouts/welcome-layout.phtml',
             ['session_user' => $session_information->toArray() ]
         );
     });
