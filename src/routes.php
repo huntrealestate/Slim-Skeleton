@@ -88,7 +88,7 @@ $app->group('/auth', function() {
             $this->renderer,
             $response,
             'welcome.phtml',
-            'layouts/welcome-layout.phtml',
+            'layouts/dashboard-layout.phtml',
             ['session_user' => $session_information->toArray() ]
         );
     });
