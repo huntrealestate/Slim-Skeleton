@@ -70,7 +70,6 @@ $app->get( '/hybrid/', function ($request, $response, $args) {
 });
 
 
-
 //all of these require authentication first
 $app->group('/auth', function() {
     
