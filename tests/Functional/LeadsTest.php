@@ -31,6 +31,7 @@ class LeadsTest extends BaseTestCase
     /**
     * Test that the logout page exists 
     */
+    //TODO: Check that when NOT authenticated the logout page redirects to the login page
     public function testGetLogoutPage()
     {
         $response=$this->runApp('GET', '/logout/');
