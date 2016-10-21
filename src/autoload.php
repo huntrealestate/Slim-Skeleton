@@ -19,5 +19,8 @@ spl_autoload_register(function ($class_name) {
     }
     $class_path = __DIR__ . DIRECTORY_SEPARATOR . implode(DIRECTORY_SEPARATOR, $path) . '.php';
     //echo  $class_name .  'being autoloaded with path ' . $class_path .'\n';
-    include $class_path ;
+    if( file_exists($class_path) ){
+        //only include if the file exists to avoid warnings
+        require_once $class_path ;
+    }
 });
