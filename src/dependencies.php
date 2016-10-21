@@ -42,19 +42,19 @@ $container['model'] = function ($container) {
     
     return [
         'leads' => $leads,
-        //'users' => \App\Model\User::from('users'), //FIXME this doesn't work
+        'users' => \App\Model\User::from('users'), //FIXME this doesn't work
     ];
 };
 
-//hybridauth
+// hybridauth
 $container['hybridauth'] = function($container) {
-    Hybrid_Endpoint::process();
     return new Hybrid_Auth($container->get('settings')['hybridauth']);
 };
 
-//HybridAuth socialauth implementation
+// socialauth implementation
 $container['socialauth'] = function($container) {
-    return new \App\SocialLogin( $container->get('model')['users'] );
+    $container->get('model'); //ensure the model has been setup
+    return new \App\Model\SocialLogin(  );
 };
 
 // google client
@@ -75,6 +75,7 @@ $container['google-client'] = function($container) {
 */
 
 // slim-oauth
+/*
 $container[SlimApi\OAuth\OAuthFactory::class] = function($container) {
     return new SlimApi\OAuth\OAuthFactory($container->get('settings')['oAuthCreds']);
 };
@@ -92,3 +93,4 @@ $container[SlimApi\OAuth\OAuthMiddleware::class] = function($container) {
         $container->get(SlimApi\OAuth\UserServiceInterface::class)
     );
 };
+*/

@@ -1,19 +1,9 @@
 <?php
-namespace App;
+namespace App\Model;
 class SocialLogin
 {
     /** @var object Database connection */
     private $user;
-
-    /**
-     * Instantiate the model class.
-     *
-     * @param object $db_connection DB connection
-     */
-    public function __construct($user_model)
-    {
-        $this->user = $user_model;
-    }
 
     /**
      * Check if a HybridAuth identifier already exists in DB
@@ -24,7 +14,7 @@ class SocialLogin
      */
     public function identifier_exists($identifier)
     {
-        return ($this->user->where('identifier', '=', $identifier)->count()) > 0;
+        return (User::where('identifier', '=', $identifier)->count()) > 0;
     }
 
     /**
@@ -36,17 +26,18 @@ class SocialLogin
      * @param string $last_name
      * @param string $avatar_url
      *
-     * @return bool
+     * @return created user object
      */
     public function register_user( $identifier, $email, $first_name, $last_name, $avatar_url )
     {
-        $this->user->create([
-            'identifier' => $identifier,
-            'email' => $email,
-            'first_name' => $first_name,
-            'last_name' => $last_name,
-            'avatar_url' => $avatar_url
-        ]);
+        $user = User::create();
+        $user->identifier = $identifier;
+        $user->email = $email;
+        $user->first_name = $first_name;
+        $user->last_name = $last_name;
+        $user->avatar_url = $avatar_url;
+        $user->save();
+        return $user;
     }
 
     /**
@@ -64,6 +55,7 @@ class SocialLogin
     {
         \Hybrid_Auth::storage()->set( 'user', null );
     }
+
     /**
      * Return user's first name.
      *
@@ -77,7 +69,7 @@ class SocialLogin
             return;
         }
 
-        $user = $this->user->select('first_name')->where('identifier','=', $identifier)->get();
+        $user = User::select('first_name')->where('identifier','=', $identifier)->get();
         return $user['first_name'];
     }
 
@@ -93,7 +85,7 @@ class SocialLogin
         if ( ! isset( $identifier )) {
             return;
         }
-        $user = $this->user->select('last_name')->where('identifier','=', $identifier)->get();
+        $user = User::select('last_name')->where('identifier','=', $identifier)->get();
         return $user['last_name'];
     }
 
@@ -109,7 +101,7 @@ class SocialLogin
         if ( ! isset( $identifier )) {
             return;
         }
-        $user = $this->user->select('email')->where('identifier','=', $identifier)->get();
+        $user = User::select('email')->where('identifier','=', $identifier)->get();
         return $user['email'];
     }
 
@@ -125,7 +117,7 @@ class SocialLogin
         if ( ! isset( $identifier )) {
             return;
         }
-        $user = $this->user->select('avatar_url')->where('identifier','=', $identifier)->get();
+        $user = User::select('avatar_url')->where('identifier','=', $identifier)->get();
         return $user['avatar_url'];
     }
 }
