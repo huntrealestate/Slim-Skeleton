@@ -58,7 +58,7 @@ $app->get( '/logout/', function ($request, $response, $args) {
 
 $app->get( '/welcome/', function ($request, $response, $args) {
     //TODO make a nice welcome landing page
-    return $response->withRedirect( '/auth/dashboard/leads/all/' );
+    return $response->withRedirect( '/auth/dashboard/' );
 });
 
 $app->get( '/oauth2endpoint/', function ($request, $response, $args) {
