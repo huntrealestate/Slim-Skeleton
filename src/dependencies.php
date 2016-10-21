@@ -21,6 +21,11 @@ $container['logger'] = function ($c) {
     return $logger;
 };
 
+// custom logging error handler
+$app['errorHandler'] = function ($c) {
+    return new App\Handlers\Error($c['logger']);
+};
+
 // Service factory for the ORM
 $container['db'] = function ($container) {
     $capsule = new \Illuminate\Database\Capsule\Manager;
