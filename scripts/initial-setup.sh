@@ -4,6 +4,7 @@ cd /etc/nginx/conf.d
 sudo ln -f -s /home/ec2-user/huntbid/etc/nginx/huntbid.conf .
 
 sudo chmod 755 /home/ec2-user
+sudo chown nginx:ec2-user /var/lib/php/session/
 
 cd /home/ec2-user/huntbid
 
@@ -35,3 +36,5 @@ touch /home/ec2-user/huntbid/logs/error.log
 chmod a+rw /home/ec2-user/huntbid/logs/error.log
 touch /home/ec2-user/huntbid/logs/app.log
 chmod a+rw /home/ec2-user/huntbid/logs/app.log
+touch /home/ec2-user/huntbid/logs/hybridauth.log
+chmod a+rw /home/ec2-user/huntbid/logs/hybridauth.log
