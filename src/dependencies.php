@@ -22,7 +22,7 @@ $container['logger'] = function ($c) {
 };
 
 // custom logging error handler
-$container['errorHandler'] = function ($c) {
+$container['phpErrorHandler'] = function ($c) {
     return new App\Handlers\Error($c['logger']);
 };
 

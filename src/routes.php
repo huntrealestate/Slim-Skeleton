@@ -65,6 +65,10 @@ $app->get( '/oauth2endpoint/', function ($request, $response, $args) {
         Hybrid_Endpoint::process();
 });
 
+$app->get( '/exception_test/', function ($request, $response, $args) {
+    throw new Exception('Fake Error For Testing');
+});
+
 $app->get( '/hybrid/', function ($request, $response, $args) {
         return $response->withRedirect( '/oauth2endpoint/' );
 });

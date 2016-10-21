@@ -6,8 +6,8 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 use Monolog\Logger;
 
-// simple extension error handler to log errors
-final class Error extends \Slim\Handlers\Error
+// php extension error handler to log errors
+final class Error extends \Slim\Handlers\PhpError
 {
     protected $logger;
  
@@ -22,5 +22,13 @@ final class Error extends \Slim\Handlers\Error
         $this->logger->critical($exception->getMessage());
  
         return parent::__invoke($request, $response, $exception);
+    }
+ 
+    public function __invoke(ServerRequestInterface $request, ResponseInterface $response, \Throwable $error)
+    {
+        // Log the message
+        $this->logger->critical($error->getMessage());
+ 
+        return parent::__invoke($request, $response, $error);
     }
 }

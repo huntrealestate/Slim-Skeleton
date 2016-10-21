@@ -18,3 +18,4 @@ class UserTest extends BaseTestCase
     }
     // TODO: Check the rest of the Google Authenticate tutorial and make sure what this returns incorporates all
     // functions.
+}
