@@ -23,8 +23,8 @@ return [
         // OAuth Credentials
         'oAuthCreds' => [
             'google' => [
-                'client_id' => '454454942361-umnh6drfmmc5sjonpivlm536os20tokb.apps.googleusercontent.com',
-                'client_secret' => 'AVrWcKSuJOj9ko-piec6UIvR',
+                'client_id' => '337991309981-r3m0oh8medlq7qakbn8lmlso2ho0f8ml.apps.googleusercontent.com',
+                'client_secret' => '5GLmx3ojBc4XUeoy--B4CfBx',
                 'application_name' => 'Hunt BIDS',
             ]
         ],
@@ -44,11 +44,11 @@ return [
         ],
 
         'hybridauth' => [
-			"base_url" => "http://ian.dev-huntbid.huntcorp.co/hybrid/",
+			"base_url" => "http://ben.dev-huntbid.huntcorp.co/oauth2endpoint/",
 			"providers" => [
 				"Google" => [
 					"enabled" => true,
-					"keys" => ["id" => "454454942361-umnh6drfmmc5sjonpivlm536os20tokb.apps.googleusercontent.com", "secret" => "AVrWcKSuJOj9ko-piec6UIvR"],
+					"keys" => ["id" => "337991309981-r3m0oh8medlq7qakbn8lmlso2ho0f8ml.apps.googleusercontent.com", "secret" => "5GLmx3ojBc4XUeoy--B4CfBx"],
 				],
 			],
 			// If you want to enable logging, set 'debug_mode' to true.
