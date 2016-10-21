@@ -4,11 +4,10 @@ namespace Tests\Functional;
 
 class LeadsTest extends BaseTestCase
 {
-    //TODO: Ensure that all /auth, the /login/ and /logout/ routes are reachable
-    
     /**
     * Test that all pages behind /auth work
     */
+    //TODO: Currently throws 500 status
     public function testGetAuthPages()
     {
         $response=$this->runApp('GET', '/auth/dashboard/leads/all/');
@@ -31,13 +30,14 @@ class LeadsTest extends BaseTestCase
     /**
     * Test that the logout page exists 
     */
-    //TODO: Check that when NOT authenticated the logout page redirects to the login page
+    //TODO: Check that when authenticated the logout page gives a 200 status
+    //TODO: Without authentication /logout/ should redirect, currently gives 500 status
     public function testGetLogoutPage()
     {
         $response=$this->runApp('GET', '/logout/');
-        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertEquals(302, $response->getStatusCode());
         $response=$this->runApp('GET', '/logout');
-        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertEquals(302, $response->getStatusCode());
 
     }
 }
