@@ -2,3 +2,4 @@
 /logs/*
 !/logs/README.md
 /vendor/phpunit/phpunit-mock-objects/phpunit.xml.dist
+/src/settings.php
