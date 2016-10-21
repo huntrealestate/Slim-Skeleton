@@ -1,6 +1,8 @@
 <?php
 
 // Routes
+require_once __DIR__ . '/app/helpers/RouteHelpers.php';
+
 //login
 $app->group('/login', function() {
  
