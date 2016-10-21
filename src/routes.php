@@ -63,8 +63,12 @@ $app->get( '/welcome/', function ($request, $response, $args) {
     return $response->withRedirect( '/auth/dashboard/leads/all/' );
 });
 
-$app->get( '/hybrid/', function ($request, $response, $args) {
+$app->get( '/oauth2endpoint/', function ($request, $response, $args) {
         Hybrid_Endpoint::process();
+});
+
+$app->get( '/hybrid/', function ($request, $response, $args) {
+        return $response->withRedirect( '/oauth2endpoint/' );
 });
 
 
