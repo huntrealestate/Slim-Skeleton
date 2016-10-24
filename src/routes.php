@@ -35,3 +35,30 @@ $app->group('/auth', function() {
         )->setName('custom-range-leads-dashboard');
     });
 })->add( new \App\Middleware\AuthenticationMiddleware( $app ) );
+
+// API routes return json
+$app->group('/api/v1', function() {
+    
+    //Average total listings controller
+    $this->group('/listings/total/average', function() {
+        $this->get('/', '\App\Controller\Api\AvgTotalListingsController:current')->setName('avg-total-listing-data');
+        $this->get('/all/', '\App\Controller\Api\AvgTotalListingsController:all')->setName('all-avg-total-listing-data');
+        $this->get('/{year}/{month}/{day}/', '\App\Controller\Api\AvgTotalListingsController:past')->setName('past-avg-total-listing-data');
+        $this->get(
+            '/{start_year}/{start_month}/{start_day}/{end_year}/{end_month}/{end_day}/',
+            '\App\Controller\Api\AvgTotalListingsController:custom'
+        )->setName('custom-range-avg-total-listing-data');
+    });
+    
+    //Average total listings controller
+    $this->group('/deals', function() {
+        $this->get('/', '\App\Controller\Api\DealsController:current')->setName('deals-data');
+        $this->get('/all/', '\App\Controller\Api\DealsController:all')->setName('all-deals-data');
+        $this->get('/{year}/{month}/{day}/', '\App\Controller\Api\DealsController:past')->setName('past-deals-data');
+        $this->get(
+            '/{start_year}/{start_month}/{start_day}/{end_year}/{end_month}/{end_day}/',
+            '\App\Controller\Api\DealsController:custom'
+        )->setName('custom-range-deals-data');
+    });
+    
+})->add( new \App\Middleware\AuthenticationMiddleware( $app ) );
