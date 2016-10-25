@@ -44,7 +44,7 @@ return [
         ],
 
         'hybridauth' => [
-			"base_url" => "http://uat.dev-huntbid.huntcorp.co/oauth2endpoint/",
+			"base_url" => "http://uat-huntbid.huntcorp.co/oauth2endpoint/",
 			"providers" => [
 				"Google" => [
 					"enabled" => true,
