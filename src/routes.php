@@ -21,6 +21,22 @@ $app->get( '/exception_test/', function ($request, $response, $args) {
 //all of these require authentication first
 $app->group('/auth', function() {
     
+    $this->get('/google/', function($request, $response, $args) {
+         return \App\Controller\BaseController::renderWithLayout(
+            $this->renderer,
+            $response,
+            'dev-dump.phtml',
+            'layouts/simple-layout.phtml',
+            [
+                'dump' => [
+                    'google'=>$this->google,
+                    'google_api'=>$this->google_api,
+                    'leads' => $this->model['leads']
+                ]
+            ]
+        );
+    })->setName('dev-google-dump');
+    
     //dashboard controller
     $this->get('/dashboard/', '\App\Controller\Profile:profile')->setName('default-dashboard');
     

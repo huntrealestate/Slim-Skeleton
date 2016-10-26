@@ -35,18 +35,11 @@ $container['db'] = function ($container) {
     return $capsule;
 };
 
-$container['model'] = function ($container) {
-    $db = $container->get('db');
-    
-    //make Leads model
-    $google_doc_id = '19Ya9gHRcS6dYFQX6aTJsbZmAfuNVpEB1lSG5a07_930';
-    $csv_url = "https://docs.google.com/spreadsheets/d/{$google_doc_id}/export?format=csv&id={$google_doc_id}";
-    $parser = new App\Utils\LeadCsvParser();
-    $csvDownloader = new App\Utils\LeadCsvDownloader( $parser, $csv_url );
-    $leads =  new App\Model\Leads($csvDownloader);
+$container['model'] = function ($c) {
+    $db = $c->get('db');
     
     return [
-        'leads' => $leads,
+        'leads' => new \App\Model\Leads($c),
         'users' => \App\Model\User::from('users'), //FIXME this doesn't work
     ];
 };
@@ -62,22 +55,40 @@ $container['socialauth'] = function($container) {
     return new \App\Model\SocialLogin(  );
 };
 
-// google client
-/*
-possibly not necessary
-$container['google-client'] = function($container) {
-    $container->get('settings')['oAuthCreds'];
-    $client = new Google_Client();
-    $client->setApplicationName($googleSettings['application_name']);
-    $client->setClientId($googleSettings['client_id']);
-    $client->setClientSecret($googleSettings['client_secret']);
-    foreach($googleSettings['scopes'] AS $nextScope){
-        $client->addScope($nextScope);
-    }
-    $client->setRedirectUri($callbackRoute); //TODO determine what this should be
-    return $client;
-}
-*/
+// google hybridauth provider adapter
+$container['google_hybrid_adapter'] = function($container) {
+    $adapter = $container->get('hybridauth')->getAdapter('Google'); // get the google adapter
+    return $adapter;
+};
+
+// google OAuth2Client
+$container['google_api_oauth'] = function($c) {
+    return $c->get('google_hybrid_adapter')->api();
+};
+
+$container['google_client'] = function($c) {
+    $googleAdapter = $c->get('google_hybrid_adapter');
+    $google_oauth = $c->get('google_api_oauth');
+    $config =[
+        'client_id' => $google_oauth->client_id,
+        'client_secret' => $google_oauth->client_secret,
+        'scopes' =>  explode(' ', $googleAdapter->config['scope']),
+        'redirect_uri' => $c->get('settings')['hybridauth']['base_url'],
+        'access_type' => $googleAdapter->config['access_type'],
+        'approval_prompt' => $googleAdapter->config['approval_prompt'],
+    ];
+    $client = new Google_Client($config);
+    $client->setLogger($c->get('logger'));
+    $token = $googleAdapter->getAccessToken();
+    //the google library mis-uses this value currently instead of expires_at, so we need to adjust it
+    $token['expires_in'] = $token['expires_in'] + time();
+    $client->setAccessToken( json_encode($token));
+    return $client; //Return the currently logged in user's google client
+};
+
+$container['google_service_drive'] = function($c) {
+    return new Google_Service_Drive($c->get('google_client'));
+};
 
 // slim-oauth
 /*
