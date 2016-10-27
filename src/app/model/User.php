@@ -12,7 +12,7 @@ class User extends Model {
      * @var string
      */
     protected $table = 'users';
-    
+
     /**
      * An alias of 'whereToken'
      * @see whereToken
@@ -21,7 +21,7 @@ class User extends Model {
     {
         return $this->whereToken($token, $type);
     }
-    
+
     /**
      * Get the user by their assosiated oauth token.
      */
@@ -37,12 +37,18 @@ class User extends Model {
         }
         return $this->hasOne('App\Model\GoogleToken');
     }
-    
+
     /**
      * Get the google token associated with the user.
      */
     public function google_token()
     {
         return $this->hasOne('App\Model\GoogleToken');
+    }
+
+    public static function getCurrentSessionUser()
+    {
+        $identifier = \Hybrid_Auth::storage()->get('user');
+        return User::where('identifier','=', $identifier)->first();
     }
 }

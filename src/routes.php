@@ -1,8 +1,6 @@
 <?php
 
 // Routes
-require_once __DIR__ . '/app/helpers/RouteHelpers.php';
-
 //login
 $app->group('/login', function() {
     $this->get( '/', '\App\Controller\Authentication:getLogin')->setName('login');
@@ -76,5 +74,5 @@ $app->group('/api/v1', function() {
             '\App\Controller\Api\DealsController:custom'
         )->setName('custom-range-deals-data');
     });
-    
+
 })->add( new \App\Middleware\AuthenticationMiddleware( $app ) );
