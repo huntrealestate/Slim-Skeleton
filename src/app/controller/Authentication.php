@@ -64,7 +64,7 @@ class Authentication extends BaseController {
 
     function welcome($request, $response, $args) {
         //TODO make a nice welcome landing page
-        return $response->withRedirect( '/auth/dashboard/leads/all/' );
+        return $response->withRedirect( '/auth/dashboard/' );
     }
 
     function oauth2endpoint($request, $response, $args) {
