@@ -1,4 +1,6 @@
-<?php namespace App\Controller;
+<?php namespace App\Controller\Api;
+
+use \App\Controller\BaseController;
 
 class DealsController extends BaseController {
 
@@ -17,7 +19,7 @@ class DealsController extends BaseController {
 
     function past($request, $response, $args) {
         $endDate = $this->createDate($args['year'], $args['month'], $args['day']);
-        $startDate = $this->createWeekStartDate($endDate);        
+        $startDate = $this->createWeekStartDate($endDate);
         $data = $this->getData( $params );
         $response->withJson($data);
     }
@@ -29,31 +31,31 @@ class DealsController extends BaseController {
         $data = $this->getData( $params );
         $response->withJson($data);
     }
-    
+
     private function setDateStartTime( \DateTime $date ){
         $date->setTime(0, 0, 0);
         return $date;
     }
-    
+
     private function createDate($year, $month, $day){
         $date = \DateTime::CreateFromFormat('Y/m/d', "{$year}/{$month}/{$day}");
         return $this->setDateStartTime($date);
         return $date;
     }
-    
+
     private function createWeekStartDate($endDate){
         $startDate = clone($endDate);
         $startDate->sub(new \DateInterval('P7D'));
         return $startDate;
     }
-    
+
     private function createParams(\DateTime $startDate, \DateTime $endDate) {
         return [
             'unix_start' => $startDate->getTimestamp(),
             'unix_end' => $endDate->getTimestamp(),
         ];
     }
-    
+
     private function getData($params = null){
         //TODO retrieve this data from a proshow API call
         //for now we append the params to some static test data
