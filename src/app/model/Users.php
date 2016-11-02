@@ -1,17 +1,8 @@
 <?php
-
 namespace App\Model;
+use \App\Model\Database\User;
 
-use Illuminate\Database\Eloquent\Model;
-
-class User extends Model {
-
-    /**
-     * The table associated with the model.
-     *
-     * @var string
-     */
-    protected $table = 'users';
+class Users {
 
     /**
      * An alias of 'whereToken'
@@ -19,7 +10,7 @@ class User extends Model {
      */
     public function byToken($token, $type = 'google')
     {
-        return $this->whereToken($token, $type);
+        return User::whereToken($token, $type);
     }
 
     /**
@@ -29,21 +20,13 @@ class User extends Model {
     {
         switch($type){
             case'google': {
-                return $this->google_token()->where('access_token', '=', $token)->user();
+                return User::google_token()->where('access_token', '=', $token)->user();
             }
             default:{
-                return $this->where('1', '=', '0');
+                return User::where('1', '=', '0');
             }
         }
-        return $this->hasOne('App\Model\GoogleToken');
-    }
-
-    /**
-     * Get the google token associated with the user.
-     */
-    public function google_token()
-    {
-        return $this->hasOne('App\Model\GoogleToken');
+        return User::hasOne('App\Model\GoogleToken');
     }
 
     public static function getCurrentSessionUser()
@@ -51,4 +34,5 @@ class User extends Model {
         $identifier = \Hybrid_Auth::storage()->get('user');
         return User::where('identifier','=', $identifier)->first();
     }
+
 }

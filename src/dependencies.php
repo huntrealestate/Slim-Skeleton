@@ -40,7 +40,7 @@ $container['model'] = function ($c) {
     
     return [
         'leads' => new \App\Model\Leads($c),
-        'users' => \App\Model\User::from('users'), //FIXME this doesn't work
+        'users' => new \App\Model\Users($c),
     ];
 };
 
@@ -52,7 +52,7 @@ $container['hybridauth'] = function($container) {
 // socialauth implementation
 $container['socialauth'] = function($container) {
     $container->get('model'); //ensure the model has been setup
-    return new \App\Model\SocialLogin(  );
+    return new \App\Model\SocialLogins(  );
 };
 
 // google hybridauth provider adapter

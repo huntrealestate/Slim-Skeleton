@@ -1,7 +1,5 @@
 <?php
 namespace App\Model;
-use App\Model\User;
-
 class SocialLogins
 {
     /** @var object Database connection */

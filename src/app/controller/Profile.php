@@ -5,7 +5,7 @@ class Profile extends BaseController {
 
     function profile($request, $response, $args) {
         $this->ci->get('model');
-        $session_information=\App\Model\User::getCurrentSessionUser();
+        $session_information=\App\Model\Users::getCurrentSessionUser();
         $data=[
             //'user'=>$session_information->toArray(),
             'firstName' => $session_information['first_name'],

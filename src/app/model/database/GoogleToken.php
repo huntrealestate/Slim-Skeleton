@@ -1,10 +1,7 @@
 <?php
+namespace App\Model\Database;
 
-namespace App\Model;
-
-use Illuminate\Database\Eloquent\Model;
-
-class GoogleToken extends Model {
+class GoogleToken extends Illuminate\Database\Eloquent\Model {
 
     /**
      * The table associated with the model.
@@ -18,6 +15,6 @@ class GoogleToken extends Model {
      */
     public function user()
     {
-        return $this->belongsTo('App\Model\User');
+        return $this->belongsTo('App\Model\Database\User');
     }
 }
