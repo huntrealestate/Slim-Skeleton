@@ -8,33 +8,17 @@
 
     <changeSet id="1" author="Ian T Small">
         <sql><![CDATA[
-CREATE TABLE `users` (
+CREATE TABLE `roles` (
     `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-	`identifier` varchar(50) NOT NULL,
     `name` VARCHAR(100) DEFAULT NULL,
     `create_timestamp` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     `update_timestamp` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-	`email` varchar(50) DEFAULT NULL,
-	`first_name` varchar(20) DEFAULT NULL,
-	`last_name` varchar(20) DEFAULT NULL,
-	`avatar_url` varchar(255),
     PRIMARY KEY (`id`),
-	UNIQUE KEY `identifier` (`identifier`)
+	UNIQUE KEY `identifier` (`name`)
 ) ENGINE=InnoDB CHARACTER SET=utf8 ROW_FORMAT=DYNAMIC;
         ]]></sql>
         <rollback><![CDATA[
 DROP TABLE users;
-        ]]></rollback>
-    </changeSet>
-
-    <changeSet id="2" author="Ian T Small">
-        <sql><![CDATA[
-ALTER TABLE users CHANGE COLUMN update_timestamp updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
-ALTER TABLE users CHANGE COLUMN create_timestamp created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
-        ]]></sql>
-        <rollback><![CDATA[
-ALTER TABLE users CHANGE COLUMN updated_at update_timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
-ALTER TABLE users CHANGE COLUMN created_at create_timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
         ]]></rollback>
     </changeSet>
 

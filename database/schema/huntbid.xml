@@ -8,6 +8,8 @@
 
     <include file="users_schema.xml" />
     <include file="google_tokens_schema.xml" />
+    <include file="roles_schema.xml" />
+    <include file="role_user_schema.xml" />
 
 </databaseChangeLog>
 

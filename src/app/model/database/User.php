@@ -19,4 +19,12 @@ class User extends Model {
     {
         return $this->hasOne('App\Model\GoogleToken');
     }
+    
+    /**
+     * Get the users that have this role.
+     */
+    public function roles()
+    {
+        return $this->belongsToMany('\App\Model\Database\Roles');
+    }
 }

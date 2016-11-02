@@ -15,6 +15,6 @@ class GoogleToken extends Illuminate\Database\Eloquent\Model {
      */
     public function user()
     {
-        return $this->belongsTo('App\Model\Database\User');
+        return $this->belongsTo('\App\Model\Database\User');
     }
 }
