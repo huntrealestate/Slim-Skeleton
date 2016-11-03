@@ -7,6 +7,78 @@ $lrsources = ['Huntrealestate.com (IDX)', 'ERA.com (Zap)', 'Homes.com', 'Homefin
 <div class="fluid-container">
 
     <div class="row">
+
+      <div class="col-md-6">
+          <div class="box" id="AvgListings">
+
+              <div class="box-header">
+                  <h3 class="box-title">Average Total Listings</h3>
+
+                  <div class="box-tools pull-right">
+                      <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                      </button>
+                      <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                  </div>
+              </div><!-- /.box-header -->
+
+              <div class="box-body table-responsive">
+                  <table class="table table-bordered table-striped" id="atlTable">
+                      <thead>
+                          <tr>
+                                <th>Region</th>
+                                <th>Value</th>
+                          </tr>
+                      </thead>
+                      <tbody data-bind="foreach: avgLeadsArr">
+                        <tr>
+                          <td data-bind="text: region"></td>
+                          <td data-bind="text: avg"></td>
+                      </tbody>
+                  </table>
+              </div>
+              </div><!-- /.box-body -->
+
+          </div><!-- /.box -->
+          <div class="col-md-6">
+              <div class="box" id="Deals">
+
+                  <div class="box-header">
+                      <h3 class="box-title">Deals</h3>
+
+                      <div class="box-tools pull-right">
+                          <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                          </button>
+                          <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                      </div>
+                  </div><!-- /.box-header -->
+
+                  <div class="box-body table-responsive">
+                      <table class="table table-bordered table-striped" id="dealsTable">
+                          <thead>
+                              <tr>
+                                    <th></th>
+                                    <th>Count</th>
+                                    <th>Dollar Value</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>New Pending Deals</td>
+                              <td data-bind="text: pendingCount"></td>
+                              <td data-bind="text: pendingDollarValue"></td>
+                            </tr>
+                            <tr>
+                              <td>New Settled Deals</td>
+                              <td data-bind="text: settledCount"></td>
+                              <td data-bind="text: settledDollarValue"></td>
+                            </tr>
+                          </tbody>
+                      </table>
+                  </div>
+                  </div><!-- /.box-body -->
+
+              </div><!-- /.box -->
+
         <div class="col-md-8">
             <div class="box">
 
@@ -20,7 +92,7 @@ $lrsources = ['Huntrealestate.com (IDX)', 'ERA.com (Zap)', 'Homes.com', 'Homefin
                     </div>
                 </div><!-- /.box-header -->
 
-                <div class="box-body table-responsive no-padding">
+                <div class="box-body table-responsive">
 
                     <!-- Leads Summary Table -->
                     <table class="table table-hover">
@@ -165,76 +237,7 @@ $(function(){
                 </div><!-- /.box-body -->
             </div><!-- /.box -->
         </div>
-        <div class="col-md-12">
-            <div class="box" id="AvgListings">
 
-                <div class="box-header">
-                    <h3 class="box-title">Average Total Listings</h3>
-
-                    <div class="box-tools pull-right">
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                        </button>
-                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-                    </div>
-                </div><!-- /.box-header -->
-
-                <div class="box-body table-responsive">
-                    <table class="table table-bordered table-striped">
-                        <thead>
-                            <tr>
-                                  <th>Region</th>
-                                  <th>Value</th>
-                            </tr>
-                        </thead>
-                        <tbody data-bind="foreach: avgLeadsArr">
-                          <tr>
-                            <td data-bind="text: region"></td>
-                            <td data-bind="text: avg"></td>
-                        </tbody>
-                    </table>
-                </div>
-                </div><!-- /.box-body -->
-
-            </div><!-- /.box -->
-            <div class="col-md-12">
-                <div class="box" id="Deals">
-
-                    <div class="box-header">
-                        <h3 class="box-title">Deals</h3>
-
-                        <div class="box-tools pull-right">
-                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                            </button>
-                            <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
-                        </div>
-                    </div><!-- /.box-header -->
-
-                    <div class="box-body table-responsive">
-                        <table class="table table-bordered table-striped">
-                            <thead>
-                                <tr>
-                                      <th></th>
-                                      <th>Count</th>
-                                      <th>Dollar Value</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                              <tr>
-                                <td>New Pending Deals</td>
-                                <td data-bind="text: pendingCount"></td>
-                                <td data-bind="text: pendingDollarValue"></td>
-                              </tr>
-                              <tr>
-                                <td>New Settled Deals</td>
-                                <td data-bind="text: settledCount"></td>
-                                <td data-bind="text: settledDollarValue"></td>
-                              </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    </div><!-- /.box-body -->
-
-                </div><!-- /.box -->
 
         <div class="col-md-12">
             <div class="box">
@@ -297,6 +300,28 @@ $(function(){
             autoWidth: true
         });
     });
+//TODO: Make the Average Total Listings and Deals tables work as datatables
+/*    $(function () {
+        $('#atlTable').DataTable({
+            paging: false,
+            lengthChange: false,
+            searching: false,
+            ordering: true,
+            info: false,
+            autoWidth: true
+        });
+    });
+    $(function () {
+        $('#dealsTable').DataTable({
+            paging: false,
+            lengthChange: false,
+            searching: false,
+            ordering: true,
+            info: false,
+            autoWidth: true
+        });
+    });
+*/
 </script>
 
             </div><!-- /.box -->
