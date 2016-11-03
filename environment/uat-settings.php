@@ -50,7 +50,7 @@ return [
 					"enabled" => true,
 					"keys" => ["id" => "337991309981-r3m0oh8medlq7qakbn8lmlso2ho0f8ml.apps.googleusercontent.com", "secret" => "5GLmx3ojBc4XUeoy--B4CfBx"],
                     "scope" => "https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/plus.profile.emails.read https://www.google.com/m8/feeds/ ".
-                       Google_Service_Drive::DRIVE_READONLY, 
+                       Google_Service_Drive::DRIVE_READONLY,
                     "access_type"     => "offline",   // optional
                     "approval_prompt" => "auto",     // optional
                 ],
@@ -63,11 +63,13 @@ return [
 			// Path to file writable by the web server. Required if 'debug_mode' is not false
 			"debug_file" => __DIR__ . '/../logs/hybridauth.log',
         ],
-        
+
         'model' =>[
             'leads' => [
                 'google_doc_ids' => [
-                    '1zbydCF1r-ZHxoh1tvoXqA9SDYNV6cHmBRHVTZV30Mag'
+                    '19Ya9gHRcS6dYFQX6aTJsbZmAfuNVpEB1lSG5a07_930',
+                    '1zbydCF1r-ZHxoh1tvoXqA9SDYNV6cHmBRHVTZV30Mag',
+                    '14lRYF3zhykp6TLvoouXPXx1u8g0gmpe1vjvYjOSU-eE'
                 ]
             ]
         ],
