@@ -25,20 +25,21 @@ class Profile extends BaseController {
             'userName' => 'User Name',
             'userDate' => '10-26-2016',
             'userStat' => 'Online',
-            'subTitle' => 'This is your user profile page',
+            'subTitle' => 'Welcome, ',
             'sideHead' => 'Sidebar Header',
             'compName' => 'Hunt Real Estate',
             'actTitle' => 'Activity Title',
             'actDesc' => 'Activity Description',
             'setTitle' => 'Setting',
-            'setDesc' => 'Setting Description'
+            'setDesc' => 'Setting Description',
+            'profileTitle' => 'Business Intelligence Dashboard'
         ];
         return BaseController::renderWithLayout(
             $this->ci->get('renderer'),
             $response,
             'dashboard.phtml',
             'layouts/dashboard-layout2.phtml',
-            $data  
+            $data
         );
     }
 }

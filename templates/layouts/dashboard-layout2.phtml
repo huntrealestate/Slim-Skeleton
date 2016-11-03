@@ -84,7 +84,7 @@
 		<!-- script src="/vendor/adminlte/dist/js/custom.js"></script -->
         <script type='text/javascript' src='/vendor/knockout/knockout-3.4.0.js'></script>
         <!-- Leads Dashboard -->
-        <script src="/js/leads-dashboard.js"></script>
+          <!-- script src="/js/leads-dashboard.js"></script -->
     <!-- end: JavaScript-->
     </head>
     <!--
@@ -327,8 +327,10 @@
                 <section class="content-header">
                     <!--TODO: Change header and subtitle to variables -->
                     <h1>
-                        <?= htmlspecialchars($data['pageTitle']); ?>
-                        <small><?= htmlspecialchars($data['subTitle']); ?></small>
+                        <?= htmlspecialchars($data['profileTitle']); ?>
+                    </h1>
+                    <h1>
+                        <small><?= htmlspecialchars($data['subTitle']); ?><?= htmlspecialchars($data['firstName']); ?></small>
                     </h1>
                     <ol class="breadcrumb">
                         <li><a href="#"><i class="fa fa-dashboard"></i> <?= htmlspecialchars($data['shortName']); ?></a></li>
