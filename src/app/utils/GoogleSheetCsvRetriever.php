@@ -23,12 +23,17 @@ class GoogleSheetCsvRetriever {
    
     ///Method to retrieve google sheet CSV
     public function downloadCSV($fileId){
-        $response = $this->driveService->files->export($fileId, 'text/csv', ['alt'=>'media']);
-        //$response = $this->api($fileId, 'GET', ['alt'=>'media
-        $content = $response->getBody()->getContents();
-        $contentExport = var_export($content, 1);
-        $this->c->get('logger')->debug("Retrieved Google content for file {$fileId}: {$content}");
-		return $this->parser->parse( $content );
+        try{
+            $response = $this->driveService->files->export($fileId, 'text/csv', ['alt'=>'media']);
+            //$response = $this->api($fileId, 'GET', ['alt'=>'media
+            $content = $response->getBody()->getContents();
+            $contentExport = var_export($content, 1);
+            $this->c->get('logger')->debug("Retrieved Google content for file {$fileId}: {$content}");
+            return $this->parser->parse( $content );
+        } catch (\Google_Service_Exception $e) {
+            $this->c->get('logger')->warning("Google service exception for file {$fileId} Caught exception:[{$e->getCode()}] {$e->getMessage()}\n{$e->getTrace()}");
+        }
+        return false;
     }
     
     private function api( $file_id, $method = "GET", $parameters = array(), $decode_json = true){
