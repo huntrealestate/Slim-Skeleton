@@ -63,7 +63,7 @@ class Leads {
             if(!$fileData){
                 throw new \Exception("User does not have permission to google document: https://docs.google.com/spreadsheets/d/{$google_doc_id}/");
             }
-            $this->bulkAddLeads(  );
+            $this->bulkAddLeads( $fileData );
         }
     }
 }
