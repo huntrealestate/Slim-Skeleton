@@ -312,7 +312,7 @@
                             </span>
                             </a>
                             <ul class="treeview-menu">
-                                <li><a href="/auth/dashboard/leads/">Current Week</a></li>
+                                <li><a href="/auth/dashboard/leads/<?= date('Y/m/d/', strtotime( "previous monday" )).date('Y/m/d/') ?>">Current Week</a></li>
                                 <li><a href="/auth/dashboard/leads/<?= date('Y/m/1/Y/m/d') ?>/">Month To Date</a></li>
                                 <li><a href="/auth/dashboard/leads/all/">All Time</a></li>
                             </ul>
