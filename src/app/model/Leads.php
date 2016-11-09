@@ -58,7 +58,12 @@ class Leads {
             new LeadCsvParser(), $this->c->get('google_service_drive'), $this->c );
         $google_doc_ids = $this->c->get('settings')['model']['leads']['google_doc_ids'];
         foreach($google_doc_ids as $google_doc_id){
-            $this->bulkAddLeads( $this->csvDownloader->downloadCsv($google_doc_id) );
+            //TODO Warn about undownloaded leads
+            $fileData = $this->csvDownloader->downloadCsv($google_doc_id);
+            if(!$fileData){
+                throw new \Exception("User does not have permission to google document: https://docs.google.com/spreadsheets/d/{$google_doc_id}/");
+            }
+            $this->bulkAddLeads( $fileData );
         }
     }
 }

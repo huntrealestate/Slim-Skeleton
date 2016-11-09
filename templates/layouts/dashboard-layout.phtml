@@ -10,7 +10,7 @@
         <title>HuntBID| [[PAGE TITLE]]</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-        
+
     <!-- start: CSS-->
         <!-- Bootstrap 3.3.6 -->
         <link rel="stylesheet" href="/vendor/adminlte/bootstrap/css/bootstrap.min.css">
@@ -29,7 +29,7 @@
         <!-- DataTables -->
         <link rel="stylesheet" href="/vendor/adminlte/plugins/datatables/dataTables.bootstrap.css">
     <!-- end: CSS-->
-        
+
     <!-- start: JavaScript-->
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -83,6 +83,8 @@
         <link rel="stylesheet" href="/css/dashboard.css">
 		<!-- script src="/vendor/adminlte/dist/js/custom.js"></script -->
         <script type='text/javascript' src='/vendor/knockout/knockout-3.4.0.js'></script>
+        <!-- Leads Dashboard -->
+        <script src="/js/leads-dashboard.js"></script>
     <!-- end: JavaScript-->
     </head>
     <!--
@@ -310,7 +312,8 @@
                             </span>
                             </a>
                             <ul class="treeview-menu">
-                                <li><a href="/auth/dashboard/leads/">This Weeks</a></li>
+                                <li><a href="/auth/dashboard/leads/<?= date('Y/m/d/', strtotime( "previous monday" )).date('Y/m/d/') ?>">Current Week</a></li>
+                                <li><a href="/auth/dashboard/leads/<?= date('Y/m/1/Y/m/d') ?>/">Month To Date</a></li>
                                 <li><a href="/auth/dashboard/leads/all/">All Time</a></li>
                             </ul>
                         </li>
