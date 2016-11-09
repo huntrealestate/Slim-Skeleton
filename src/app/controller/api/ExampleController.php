@@ -2,9 +2,9 @@
 
 use \App\Controller\BaseController;
 
-class DealsController extends BaseController {
+class ExampleApiController extends BaseController {
 
-    function current($request, $response, $args) {
+    function default($request, $response, $args) {
         $endDate = $this->setDateStartTime( new \DateTime() );
         $startDate = $this->createWeekStartDate($endDate);
         $params = $this->createParams($startDate, $endDate);
@@ -59,12 +59,14 @@ class DealsController extends BaseController {
     private function getData($params = null){
         //TODO retrieve this data from a proshow API call
         //for now we append the params to some static test data
-        return $params + [
-            'deals' => [
-                'pending' => [ 'count' => 2, 'dollar_value' => 391000 ],
-                'settled' => [ 'count' => 2, 'dollar_value' => 373500 ],
+        return [ 'meta-data' => $params,
+            'data' => [
+                'Buffalo',
+                'Rochester',
+                'Syracuse',
+                'Capital',
+                'Arizona',
             ]
         ];
-        return $data;
     }
 }

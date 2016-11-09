@@ -5,8 +5,16 @@ date_default_timezone_set('UTC');
 
 return [
     'settings' => [
-        'displayErrorDetails' => true, // set to false in production
+        'displayErrorDetails' => false, // set to false in production
         'addContentLengthHeader' => false, // Allow the web server to send the content-length header
+        
+        'app' => [
+            'shortName' => '', //The short app name text
+            'logoMini' => '',// mini logo text
+            'logoLg1' => '',//primary large logo text
+            'logoLg2' => '',//secondary large logo text
+            'compName' => 'Hunt Real Estate', //Legal company name
+        ],
 
         // Renderer settings
         'renderer' => [
@@ -22,10 +30,10 @@ return [
 
         // OAuth Credentials
         'oAuthCreds' => [
-            'google' => [
-                'client_id' => '337991309981-r3m0oh8medlq7qakbn8lmlso2ho0f8ml.apps.googleusercontent.com',
-                'client_secret' => '5GLmx3ojBc4XUeoy--B4CfBx',
-                'application_name' => 'Hunt BIDS',
+            'google' => [ //Google Apps Configuration settings
+                'client_id' => '',
+                'client_secret' => '',
+                'application_name' => '',
             ]
         ],
 
@@ -44,34 +52,25 @@ return [
         ],
 
         'hybridauth' => [
-			"base_url" => "http://huntbid.huntcorp.co/oauth2endpoint/",
+			"base_url" => "", //must match the fully qualified route named 'oauth2endpoint' in src/routes.php
 			"providers" => [
-				"Google" => [
+				"Google" => [ //Google Apps Configuration settings
 					"enabled" => true,
-					"keys" => ["id" => "337991309981-r3m0oh8medlq7qakbn8lmlso2ho0f8ml.apps.googleusercontent.com", "secret" => "5GLmx3ojBc4XUeoy--B4CfBx"],
-                    "scope" => "https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/plus.profile.emails.read https://www.google.com/m8/feeds/ ".
-                      Google_Service_Drive::DRIVE_READONLY,
+					"keys" => ["id" => "", "secret" => ""],
+                    // Example scopes necessary for reading google docs and retrieving basic profile data
+                    "scope" => "https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/plus.profile.emails.read ".
+                       Google_Service_Drive::DRIVE_READONLY,
                     "access_type"     => "offline",   // optional
                     "approval_prompt" => "auto",     // optional
-        ],
+                ],
 			],
 			// If you want to enable logging, set 'debug_mode' to true.
 			// You can also set it to
 			// - "error" To log only error messages. Useful in production
 			// - "info" To log info and error messages (ignore debug messages]
-			"debug_mode" => true,
+			"debug_mode" => 'info',
 			// Path to file writable by the web server. Required if 'debug_mode' is not false
 			"debug_file" => __DIR__ . '/../logs/hybridauth.log',
-        ],
-
-        'model' =>[
-            'leads' => [
-                'google_doc_ids' => [
-                  '19Ya9gHRcS6dYFQX6aTJsbZmAfuNVpEB1lSG5a07_930',
-                  '1zbydCF1r-ZHxoh1tvoXqA9SDYNV6cHmBRHVTZV30Mag',
-                  '14lRYF3zhykp6TLvoouXPXx1u8g0gmpe1vjvYjOSU-eE'
-                ]
-            ]
         ],
     ],
 ];

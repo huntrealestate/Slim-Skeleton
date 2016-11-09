@@ -4,8 +4,9 @@ namespace App\Service\Google;
 use SlimApi\OAuth\UserServiceInterface;
 use OAuth\Common\Service\ServiceInterface;
 
+///@DEPRECATED
 class UserService implements UserServiceInterface {
-    
+
     public function __construct($userModel)
     {
         $this->userModel = $userModel;
@@ -17,7 +18,7 @@ class UserService implements UserServiceInterface {
         // could go further with this and check org/team membership
         $user = json_decode($googleService->request('user'), true);
 
-        // try to find user by the oauth server's user id, 
+        // try to find user by the oauth server's user id,
         // best way since oauth token might have been invalidated
         $model  = $this->userModel->firstOrNew(['remote_id' => $user['id']]);
         $model->oauth_token = $googleService->getStorage()->retrieveAccessToken('google')->getAccessToken();

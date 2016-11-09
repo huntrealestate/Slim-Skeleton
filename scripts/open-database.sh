@@ -1,12 +1,15 @@
 #!/bin/sh
 
-CONFIG=/home/ec2-user/huntbid/bin/app-settings.php
+echo 'Edit this file to replace all instances of <project_name> with the project''s name'
+exit;
 
-HOST=$($CONFIG db.huntbiddb.host)
-PORT=$($CONFIG db.huntbiddb.port)
-NAME=$($CONFIG db.huntbiddb.database)
-USER=$($CONFIG db.huntbiddb.username)
-PASS=$($CONFIG db.huntbiddb.password)
+CONFIG=/home/ec2-user/<project_name>/bin/app-settings.php
+
+HOST=$($CONFIG db.<project_name>db.host)
+PORT=$($CONFIG db.<project_name>db.port)
+NAME=$($CONFIG db.<project_name>db.database)
+USER=$($CONFIG db.<project_name>db.username)
+PASS=$($CONFIG db.<project_name>db.password)
 
 mysql -h "$HOST" -P "$PORT" -u "$USER" -p"$PASS" "$NAME"
 

@@ -14,7 +14,7 @@ $app->get( '/hybrid/','\App\Controller\Authentication:oauth2endpoint')->setName(
 
 $app->get( '/exception_test/', function ($request, $response, $args) {
     throw new Exception('Fake Error For Testing');
-});
+})->setName('exception-test');;
 
 //all of these require authentication first
 $app->group('/auth', function() {
@@ -28,8 +28,7 @@ $app->group('/auth', function() {
             [
                 'dump' => [
                     'google'=>$this->google,
-                    'google_api'=>$this->google_api,
-                    'leads' => $this->model['leads']
+                    'google_api'=>$this->google_api
                 ]
             ]
         );
@@ -54,25 +53,12 @@ $app->group('/auth', function() {
 $app->group('/api/v1', function() {
     
     //Average total listings controller
-    $this->group('/listings/total/average', function() {
-        $this->get('/', '\App\Controller\Api\AvgTotalListingsController:current')->setName('avg-total-listing-data');
-        $this->get('/all/', '\App\Controller\Api\AvgTotalListingsController:all')->setName('all-avg-total-listing-data');
-        $this->get('/{year}/{month}/{day}/', '\App\Controller\Api\AvgTotalListingsController:past')->setName('past-avg-total-listing-data');
+    $this->group('/example_data', function() {
+        $this->get('/', '\App\Controller\Api\ExampleData:default')->setName('default-example-data');
+        $this->get('/all/', '\App\Controller\Api\ExampleData:all')->setName('all-example-data');
         $this->get(
             '/{start_year}/{start_month}/{start_day}/{end_year}/{end_month}/{end_day}/',
-            '\App\Controller\Api\AvgTotalListingsController:custom'
-        )->setName('custom-range-avg-total-listing-data');
+            '\App\Controller\Api\ExampleData:custom'
+        )->setName('custom-range-example-data');
     });
-    
-    //Average total listings controller
-    $this->group('/deals', function() {
-        $this->get('/', '\App\Controller\Api\DealsController:current')->setName('deals-data');
-        $this->get('/all/', '\App\Controller\Api\DealsController:all')->setName('all-deals-data');
-        $this->get('/{year}/{month}/{day}/', '\App\Controller\Api\DealsController:past')->setName('past-deals-data');
-        $this->get(
-            '/{start_year}/{start_month}/{start_day}/{end_year}/{end_month}/{end_day}/',
-            '\App\Controller\Api\DealsController:custom'
-        )->setName('custom-range-deals-data');
-    });
-
 })->add( new \App\Middleware\AuthenticationMiddleware( $app ) );
